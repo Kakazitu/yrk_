@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kakazitu</title>
-    <!-- Adicionando um favicon -->
+    <!-- Favicon -->
     <link rel="icon" href="sua-foto.png" type="image/png">
+    <!-- Fonte de programação -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap">
     <style>
         * {
@@ -27,17 +28,7 @@
             z-index: -1;
             object-fit: cover;
         }
-        /* Centralizar conteúdo */
-        .content {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            text-align: center;
-            color: white;
-            background: rgba(0, 0, 0, 0.5);
-        }
+        /* Estilo do cabeçalho */
         .header {
             position: fixed;
             top: 0;
@@ -57,12 +48,23 @@
             margin-right: 15px;
         }
         .header h1 {
-            font-size: 2em;
+            font-size: 1.5em;
             margin: 0;
-            overflow: hidden;
             white-space: nowrap;
+            overflow: hidden;
             border-right: .15em solid orange;
             animation: blink-caret .75s step-end infinite;
+        }
+        /* Centralizar conteúdo */
+        .content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            color: white;
+            background: rgba(0, 0, 0, 0.5);
         }
         .name {
             font-size: 3em;
@@ -71,13 +73,55 @@
         h1 {
             font-size: 4em;
             margin: 0;
-            overflow: hidden;
             white-space: nowrap;
+            overflow: hidden;
             border-right: .15em solid orange;
             animation: blink-caret .75s step-end infinite;
         }
         p {
             font-size: 1.5em;
+        }
+        /* Painel de badges */
+        .badges-panel {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            padding: 5px 10px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            color: white;
+        }
+        .badges-panel p {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+        .badge {
+            width: 25px;
+            height: 25px;
+            margin-right: 5px;
+            position: relative;
+            transition: transform 0.3s;
+        }
+        .badge:hover {
+            transform: scale(1.2);
+        }
+        .badge:hover .badge-tooltip {
+            display: block;
+        }
+        .badge-tooltip {
+            display: none;
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.7em;
+            white-space: nowrap;
         }
         /* Animação de digitação */
         @keyframes typing {
@@ -85,7 +129,7 @@
                 width: 0;
             }
             to {
-                width: 12em; /* Ajuste conforme necessário */
+                width: 12em;
             }
         }
         @keyframes blink-caret {
@@ -94,27 +138,6 @@
             }
             50% {
                 border-color: orange;
-            }
-        }
-        /* Estilo para flocos de neve */
-        .snowflake {
-            position: absolute;
-            background-color: white;
-            border-radius: 50%;
-            pointer-events: none;
-            width: 10px;
-            height: 10px;
-            opacity: 0.8;
-            z-index: 10;
-            transform: translate(-50%, -50%);
-            will-change: transform;
-        }
-        @keyframes fall {
-            0% {
-                transform: translate(-50%, -50%) translateY(0) rotate(0);
-            }
-            100% {
-                transform: translate(-50%, -50%) translateY(100vh) rotate(360deg);
             }
         }
     </style>
@@ -134,10 +157,23 @@
 
     <!-- Conteúdo -->
     <div class="content">
-        <div class="name">KAKAZITU</div>
+        <div class="name">Kakazitu</div>
         <div>
             <h1 id="dynamic-text">PROGRAMANDO...</h1>
-            <p>Desenvolvedor | Criador</p>
+            <p>Desenvolvedor | Criador de Conteúdo</p>
+        </div>
+    </div>
+
+    <!-- Painel de badges -->
+    <div class="badges-panel">
+        <p>BADGES:</p>
+        <div class="badge">
+            <img src="badge-owner.png" alt="Owner Badge" class="badge-img">
+            <div class="badge-tooltip">OWNER/DONO</div>
+        </div>
+        <div class="badge">
+            <img src="badge-premium.png" alt="Premium Badge" class="badge-img">
+            <div class="badge-tooltip">PREMIUM</div>
         </div>
     </div>
 
@@ -146,9 +182,9 @@
         const headerTextElement = document.getElementById('header-text');
         
         const initialText = 'PROGRAMANDO...';
-        const finalText = 'BROXA...';
-        const typingDuration = 3500; // Tempo para animação de digitação (3.5 segundos)
-        const displayDuration = 5000; // Tempo para exibir o texto (5 segundos)
+        const finalText = 'CULT777...';
+        const typingDuration = 3500; // 3.5 segundos
+        const displayDuration = 5000; // Exibir texto por 5 segundos
 
         const headerTitles = ["DISCORD: yrk_777", "ROBLOX: @JORGEOMORTO"];
         let headerIndex = 0;
@@ -163,34 +199,33 @@
                 if (isShowingInitialText) {
                     textElement.textContent = initialText;
                     textElement.style.animation = `typing ${typingDuration}ms steps(40, end) forwards, blink-caret .75s step-end infinite`;
-                    if (elapsedTime >= displayDuration) { // 5 segundos
-                        textElement.style.animation = ''; // Remove a animação atual
+                    if (elapsedTime >= displayDuration) {
+                        textElement.style.animation = '';
                         setTimeout(() => {
                             isShowingInitialText = false;
-                            startTime = Date.now(); // Reinicia o tempo para o próximo texto
-                        }, 500); // Espera um pouco para garantir que o texto desapareça
+                            startTime = Date.now();
+                        }, 500);
                     }
                 } else {
                     textElement.textContent = finalText;
                     textElement.style.animation = `typing ${typingDuration}ms steps(40, end) forwards, blink-caret .75s step-end infinite`;
-                    if (elapsedTime >= displayDuration) { // 5 segundos
-                        textElement.style.animation = ''; // Remove a animação atual
+                    if (elapsedTime >= displayDuration) {
+                        textElement.style.animation = '';
                         setTimeout(() => {
                             isShowingInitialText = true;
-                            startTime = Date.now(); // Reinicia o tempo para o próximo texto
-                        }, 500); // Espera um pouco para garantir que o texto desapareça
+                            startTime = Date.now();
+                        }, 500);
                     }
                 }
-                
+
                 requestAnimationFrame(animateText);
             }
-            
+
             animateText();
         }
 
         updateText();
 
-        // Atualizando o texto do cabeçalho com animação
         function updateHeaderText() {
             let headerStartTime = Date.now();
             let isShowingFirstHeader = true;
@@ -199,20 +234,20 @@
                 let elapsedHeaderTime = Date.now() - headerStartTime;
 
                 if (isShowingFirstHeader) {
-                    headerTextElement.textContent = headerTitles[0]; // Exibe "DISCORD"
+                    headerTextElement.textContent = headerTitles[0];
                     headerTextElement.style.animation = `typing ${typingDuration}ms steps(40, end) forwards, blink-caret .75s step-end infinite`;
                     if (elapsedHeaderTime >= displayDuration) {
-                        headerTextElement.style.animation = ''; // Remove a animação atual
+                        headerTextElement.style.animation = '';
                         setTimeout(() => {
                             isShowingFirstHeader = false;
                             headerStartTime = Date.now();
-                        }, 500); // Tempo de espera para a troca de textos
+                        }, 500);
                     }
                 } else {
-                    headerTextElement.textContent = headerTitles[1]; // Exibe "ROBLOX"
+                    headerTextElement.textContent = headerTitles[1];
                     headerTextElement.style.animation = `typing ${typingDuration}ms steps(40, end) forwards, blink-caret .75s step-end infinite`;
                     if (elapsedHeaderTime >= displayDuration) {
-                        headerTextElement.style.animation = ''; // Remove a animação atual
+                        headerTextElement.style.animation = '';
                         setTimeout(() => {
                             isShowingFirstHeader = true;
                             headerStartTime = Date.now();
@@ -227,21 +262,6 @@
         }
 
         updateHeaderText();
-
-        // Efeito de neve
-        document.addEventListener('mousemove', (event) => {
-            for (let i = 0; i < 5; i++) {
-                const snowflake = document.createElement('div');
-                snowflake.classList.add('snowflake');
-                snowflake.style.left = `${event.clientX + (Math.random() - 0.5) * 10}px`;
-                snowflake.style.top = `${event.clientY + (Math.random() - 0.5) * 10}px`;
-                document.body.appendChild(snowflake);
-                snowflake.style.animation = `fall 3s linear`;
-                setTimeout(() => {
-                    snowflake.remove();
-                }, 3000); // Tempo para o floco de neve desaparecer
-            }
-        });
     </script>
 </body>
 </html>
