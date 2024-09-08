@@ -99,11 +99,15 @@
             font-size: 1.2em;
         }
         .badge {
-            width: 25px;
-            height: 25px;
+            width: 24px; /* Ajuste o tamanho para ficar alinhado com o texto BADGES */
+            height: 24px;
             margin-right: 5px;
             position: relative;
             transition: transform 0.3s;
+        }
+        .badge img {
+            width: 100%;
+            height: 100%;
         }
         .badge:hover {
             transform: scale(1.2);
@@ -157,7 +161,7 @@
 
     <!-- Conteúdo -->
     <div class="content">
-        <div class="name">Kakazitu</div>
+        <div class="name">KAKAZITU</div>
         <div>
             <h1 id="dynamic-text">PROGRAMANDO...</h1>
             <p>Desenvolvedor | Criador de Conteúdo</p>
@@ -168,11 +172,11 @@
     <div class="badges-panel">
         <p>BADGES:</p>
         <div class="badge">
-            <img src="badge-owner.png" alt="Owner Badge" class="badge-img">
+            <img src="badge-owner.png" alt="Owner Badge">
             <div class="badge-tooltip">OWNER/DONO</div>
         </div>
         <div class="badge">
-            <img src="badge-premium.png" alt="Premium Badge" class="badge-img">
+            <img src="badge-premium.png" alt="Premium Badge">
             <div class="badge-tooltip">PREMIUM</div>
         </div>
     </div>
