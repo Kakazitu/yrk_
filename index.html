@@ -55,14 +55,13 @@
             width: 10px;
             height: 10px;
             opacity: 0.8;
-            pointer-events: none;
             z-index: 10;
             transform: translate(-50%, -50%);
             will-change: transform;
         }
         @keyframes fall {
             0% {
-                transform: translate(-50%, -50%) translateY(-100px) rotate(0);
+                transform: translate(-50%, -50%) translateY(0) rotate(0);
             }
             100% {
                 transform: translate(-50%, -50%) translateY(100vh) rotate(360deg);
@@ -98,7 +97,6 @@
         const finalText = 'CULT777...';
         let index = 0;
         let isDeleting = false;
-        let isShowingFinalText = false;
 
         function typeEffect() {
             if (isDeleting) {
@@ -108,12 +106,10 @@
                     index = 0;
                     setTimeout(() => {
                         textElement.textContent = finalText;
-                        isShowingFinalText = true;
+                        index = finalText.length;
                         setTimeout(() => {
                             textElement.textContent = '';
-                            index = finalText.length;
                             isDeleting = true;
-                            isShowingFinalText = false;
                             setTimeout(typeEffect, 500);
                         }, 1000);
                     }, 500);
@@ -122,7 +118,11 @@
                 textElement.textContent = initialText.substring(0, index++);
                 if (index > initialText.length) {
                     isDeleting = true;
-                    setTimeout(typeEffect, 500);
+                    setTimeout(() => {
+                        textElement.textContent = '';
+                        index = finalText.length;
+                        setTimeout(typeEffect, 500);
+                    }, 1000);
                 } else {
                     setTimeout(typeEffect, 100);
                 }
@@ -140,8 +140,8 @@
             for (let i = 0; i < 5; i++) {
                 const snowflake = document.createElement('div');
                 snowflake.classList.add('snowflake');
-                snowflake.style.left = `${event.clientX + (Math.random() - 0.5) * 20}px`;
-                snowflake.style.top = `${event.clientY + (Math.random() - 0.5) * 20}px`;
+                snowflake.style.left = `${event.clientX + (Math.random() - 0.5) * 10}px`;
+                snowflake.style.top = `${event.clientY + (Math.random() - 0.5) * 10}px`;
                 document.body.appendChild(snowflake);
                 snowflake.style.animation = `fall 3s linear`;
                 setTimeout(() => {
