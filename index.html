@@ -81,6 +81,41 @@
         p {
             font-size: 1.5em;
         }
+        /* Links para Discord e Roblox */
+        .links {
+            margin-top: 20px;
+            display: flex;
+            gap: 20px;
+        }
+        .links a {
+            position: relative;
+            display: inline-block;
+        }
+        .links img {
+            width: 50px; /* Tamanho ajustado */
+            height: 50px;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+        .links img:hover {
+            transform: scale(1.2);
+        }
+        .links .tooltip {
+            display: none;
+            position: absolute;
+            bottom: 120%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            white-space: nowrap;
+        }
+        .links a:hover .tooltip {
+            display: block;
+        }
         /* Painel de badges */
         .badges-panel {
             position: fixed;
@@ -161,10 +196,21 @@
 
     <!-- Conteúdo -->
     <div class="content">
-        <div class="name">KAKAZITU</div>
+        <div class="name">Kakazitu</div>
         <div>
             <h1 id="dynamic-text">PROGRAMANDO...</h1>
             <p>Desenvolvedor | Criador de Conteúdo</p>
+            <!-- Links para Discord e Roblox -->
+            <div class="links">
+                <a href="http://discordapp.com/users/749409557209677835" target="_blank">
+                    <img src="discord-logo.png" alt="Discord Logo">
+                    <div class="tooltip">DISCORD</div>
+                </a>
+                <a href="https://www.roblox.com/pt/users/2798972541/profile" target="_blank">
+                    <img src="roblox-logo.png" alt="Roblox Logo">
+                    <div class="tooltip">ROBLOX</div>
+                </a>
+            </div>
         </div>
     </div>
 
@@ -186,7 +232,7 @@
         const headerTextElement = document.getElementById('header-text');
         
         const initialText = 'PROGRAMANDO...';
-        const finalText = 'DEVELOPER...';
+        const finalText = 'CULT777...';
         const typingDuration = 3500; // 3.5 segundos
         const displayDuration = 5000; // Exibir texto por 5 segundos
 
