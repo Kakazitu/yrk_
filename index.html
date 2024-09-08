@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meu Perfil</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap">
     <style>
         * {
             margin: 0;
@@ -12,7 +13,7 @@
         }
         body, html {
             height: 100%;
-            font-family: Arial, sans-serif;
+            font-family: 'Fira Code', monospace;
         }
         /* Vídeo de fundo */
         .video-bg {
@@ -124,15 +125,21 @@
                     textElement.textContent = initialText;
                     textElement.style.animation = `typing ${typingDuration}ms steps(40, end) forwards, blink-caret .75s step-end infinite`;
                     if (elapsedTime >= displayDuration) { // 5 segundos
-                        isShowingInitialText = false;
-                        startTime = Date.now(); // Reinicia o tempo para o próximo texto
+                        textElement.style.animation = ''; // Remove a animação atual
+                        setTimeout(() => {
+                            isShowingInitialText = false;
+                            startTime = Date.now(); // Reinicia o tempo para o próximo texto
+                        }, 500); // Espera um pouco para garantir que o texto desapareça
                     }
                 } else {
                     textElement.textContent = finalText;
                     textElement.style.animation = `typing ${typingDuration}ms steps(40, end) forwards, blink-caret .75s step-end infinite`;
                     if (elapsedTime >= displayDuration) { // 5 segundos
-                        isShowingInitialText = true;
-                        startTime = Date.now(); // Reinicia o tempo para o próximo texto
+                        textElement.style.animation = ''; // Remove a animação atual
+                        setTimeout(() => {
+                            isShowingInitialText = true;
+                            startTime = Date.now(); // Reinicia o tempo para o próximo texto
+                        }, 500); // Espera um pouco para garantir que o texto desapareça
                     }
                 }
                 
