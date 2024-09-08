@@ -52,17 +52,20 @@
             background-color: white;
             border-radius: 50%;
             pointer-events: none;
-            width: 8px;
-            height: 8px;
+            width: 10px;
+            height: 10px;
             opacity: 0.8;
-            animation: fall linear;
+            pointer-events: none;
+            z-index: 10;
+            transform: translate(-50%, -50%);
+            will-change: transform;
         }
         @keyframes fall {
             0% {
-                transform: translateY(-100px);
+                transform: translate(-50%, -50%) translateY(-100px) rotate(0);
             }
             100% {
-                transform: translateY(100vh);
+                transform: translate(-50%, -50%) translateY(100vh) rotate(360deg);
             }
         }
     </style>
@@ -79,7 +82,7 @@
         <div class="name">Kakazitu</div>
         <div>
             <h1 id="dynamic-text">PROGRAMANDO...</h1>
-            <p>Desenvolvedor | Criador de Conteúdo</p>
+            <p>Desenvolvedor | Criador</p>
         </div>
     </div>
 
@@ -103,18 +106,23 @@
                 if (index < 0) {
                     isDeleting = false;
                     index = 0;
-                    setTimeout(typeEffect, 500);
+                    setTimeout(() => {
+                        textElement.textContent = finalText;
+                        isShowingFinalText = true;
+                        setTimeout(() => {
+                            textElement.textContent = '';
+                            index = finalText.length;
+                            isDeleting = true;
+                            isShowingFinalText = false;
+                            setTimeout(typeEffect, 500);
+                        }, 1000);
+                    }, 500);
                 }
             } else {
                 textElement.textContent = initialText.substring(0, index++);
                 if (index > initialText.length) {
                     isDeleting = true;
-                    setTimeout(() => {
-                        textElement.textContent = '';
-                        index = finalText.length;
-                        isShowingFinalText = true;
-                        setTimeout(typeEffect, 500);
-                    }, 500);
+                    setTimeout(typeEffect, 500);
                 } else {
                     setTimeout(typeEffect, 100);
                 }
@@ -122,24 +130,24 @@
         }
 
         function start() {
-            setTimeout(() => {
-                textElement.textContent = initialText;
-                typeEffect();
-            }, 500);
+            typeEffect();
         }
 
         start();
 
         // Efeito de neve
         document.addEventListener('mousemove', (event) => {
-            const snowflake = document.createElement('div');
-            snowflake.classList.add('snowflake');
-            snowflake.style.left = `${event.clientX}px`;
-            snowflake.style.top = `${event.clientY}px`;
-            document.body.appendChild(snowflake);
-            setTimeout(() => {
-                snowflake.remove();
-            }, 1000); // Tempo para o floco de neve desaparecer
+            for (let i = 0; i < 5; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.classList.add('snowflake');
+                snowflake.style.left = `${event.clientX + (Math.random() - 0.5) * 20}px`;
+                snowflake.style.top = `${event.clientY + (Math.random() - 0.5) * 20}px`;
+                document.body.appendChild(snowflake);
+                snowflake.style.animation = `fall 3s linear`;
+                setTimeout(() => {
+                    snowflake.remove();
+                }, 3000); // Tempo para o floco de neve desaparecer
+            }
         });
     </script>
 </body>
