@@ -42,9 +42,22 @@
         h1 {
             font-size: 4em;
             margin: 0;
+            overflow: hidden; /* Ensures the text is clipped at the boundaries */
+            white-space: nowrap; /* Keeps the text in a single line */
+            border-right: .15em solid orange; /* Cursor effect */
+            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
         }
         p {
             font-size: 1.5em;
+        }
+        /* Animação de digitação */
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 18em; }
+        }
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: orange; }
         }
         /* Estilo para flocos de neve */
         .snowflake {
@@ -78,7 +91,7 @@
 
     <!-- Conteúdo -->
     <div class="content">
-        <div class="name">Kakazitu</div>
+        <div class="name">KAKAZITU</div>
         <div>
             <h1 id="dynamic-text">PROGRAMANDO...</h1>
             <p>Desenvolvedor | Criador de Conteúdo</p>
@@ -86,7 +99,7 @@
     </div>
 
     <!-- Áudio de fundo -->
-    <audio autoplay loop>
+    <audio id="background-audio" autoplay loop>
         <source src="seu-audio.mp3" type="audio/mpeg">
         Seu navegador não suporta o elemento de áudio.
     </audio>
@@ -139,6 +152,12 @@
                 }, 3000); // Tempo para o floco de neve desaparecer
             }
         });
+        
+        // Verificar se o áudio está reproduzindo
+        const audio = document.getElementById('background-audio');
+        audio.oncanplaythrough = () => {
+            audio.muted = false; // Assegura que o áudio não esteja mudo
+        };
     </script>
 </body>
 </html>
