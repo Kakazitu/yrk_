@@ -62,7 +62,7 @@
             overflow: hidden;
             white-space: nowrap;
             border-right: .15em solid orange;
-            animation: blink-caret .75s step-end infinite, typing 4s steps(40, end) infinite;
+            animation: blink-caret .75s step-end infinite;
         }
         .name {
             font-size: 3em;
@@ -134,7 +134,7 @@
 
     <!-- Conteúdo -->
     <div class="content">
-        <div class="name">KAKAZITU</div>
+        <div class="name">Kakazitu</div>
         <div>
             <h1 id="dynamic-text">PROGRAMANDO...</h1>
             <p>Desenvolvedor | Criador de Conteúdo</p>
@@ -190,13 +190,43 @@
 
         updateText();
 
-        // Atualizando o texto do cabeçalho em loop
-        function updateHeader() {
-            headerTextElement.textContent = headerTitles[headerIndex];
-            headerIndex = (headerIndex + 1) % headerTitles.length;
+        // Atualizando o texto do cabeçalho com animação
+        function updateHeaderText() {
+            let headerStartTime = Date.now();
+            let isShowingFirstHeader = true;
+
+            function animateHeader() {
+                let elapsedHeaderTime = Date.now() - headerStartTime;
+
+                if (isShowingFirstHeader) {
+                    headerTextElement.textContent = headerTitles[0]; // Exibe "DISCORD"
+                    headerTextElement.style.animation = `typing ${typingDuration}ms steps(40, end) forwards, blink-caret .75s step-end infinite`;
+                    if (elapsedHeaderTime >= displayDuration) {
+                        headerTextElement.style.animation = ''; // Remove a animação atual
+                        setTimeout(() => {
+                            isShowingFirstHeader = false;
+                            headerStartTime = Date.now();
+                        }, 500); // Tempo de espera para a troca de textos
+                    }
+                } else {
+                    headerTextElement.textContent = headerTitles[1]; // Exibe "ROBLOX"
+                    headerTextElement.style.animation = `typing ${typingDuration}ms steps(40, end) forwards, blink-caret .75s step-end infinite`;
+                    if (elapsedHeaderTime >= displayDuration) {
+                        headerTextElement.style.animation = ''; // Remove a animação atual
+                        setTimeout(() => {
+                            isShowingFirstHeader = true;
+                            headerStartTime = Date.now();
+                        }, 500);
+                    }
+                }
+
+                requestAnimationFrame(animateHeader);
+            }
+
+            animateHeader();
         }
 
-        setInterval(updateHeader, 5000); // Muda o texto do cabeçalho a cada 5 segundos
+        updateHeaderText();
 
         // Efeito de neve
         document.addEventListener('mousemove', (event) => {
