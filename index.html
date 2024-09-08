@@ -45,21 +45,18 @@
             overflow: hidden; /* Garante que o texto seja cortado nas bordas */
             white-space: nowrap; /* Mantém o texto em uma única linha */
             border-right: .15em solid orange; /* Efeito de cursor */
-            animation: typing 3.5s steps(40, end) infinite, blink-caret .75s step-end infinite;
+            animation: blink-caret .75s step-end infinite;
         }
         p {
             font-size: 1.5em;
         }
         /* Animação de digitação */
         @keyframes typing {
-            0% {
+            from {
                 width: 0;
             }
-            50% {
+            to {
                 width: 12em; /* Ajuste conforme necessário */
-            }
-            100% {
-                width: 0;
             }
         }
         @keyframes blink-caret {
@@ -95,7 +92,7 @@
 </head>
 <body>
     <!-- Vídeo de fundo -->
-    <video class="video-bg" autoplay muted loop>
+    <video class="video-bg" autoplay loop>
         <source src="seu-video.mp4" type="video/mp4">
         Seu navegador não suporta vídeos em HTML5.
     </video>
@@ -113,6 +110,8 @@
         const textElement = document.getElementById('dynamic-text');
         const initialText = 'PROGRAMANDO...';
         const finalText = 'CULT777...';
+        const typingDuration = 3500; // Tempo para animação de digitação (3.5 segundos)
+        const displayDuration = 5000; // Tempo para exibir o texto (5 segundos)
 
         function updateText() {
             let startTime = Date.now();
@@ -120,18 +119,18 @@
 
             function animateText() {
                 let elapsedTime = Date.now() - startTime;
-                
+
                 if (isShowingInitialText) {
                     textElement.textContent = initialText;
-                    textElement.style.animation = `typing 3.5s steps(40, end) infinite, blink-caret .75s step-end infinite`;
-                    if (elapsedTime >= 5000) { // 5 segundos
+                    textElement.style.animation = `typing ${typingDuration}ms steps(40, end) forwards, blink-caret .75s step-end infinite`;
+                    if (elapsedTime >= displayDuration) { // 5 segundos
                         isShowingInitialText = false;
                         startTime = Date.now(); // Reinicia o tempo para o próximo texto
                     }
                 } else {
                     textElement.textContent = finalText;
-                    textElement.style.animation = `typing 3.5s steps(40, end) infinite, blink-caret .75s step-end infinite`;
-                    if (elapsedTime >= 5000) { // 5 segundos
+                    textElement.style.animation = `typing ${typingDuration}ms steps(40, end) forwards, blink-caret .75s step-end infinite`;
+                    if (elapsedTime >= displayDuration) { // 5 segundos
                         isShowingInitialText = true;
                         startTime = Date.now(); // Reinicia o tempo para o próximo texto
                     }
