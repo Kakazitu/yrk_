@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bio</title>
+    <title>Meu Perfil</title>
     <style>
         * {
             margin: 0;
@@ -14,6 +14,7 @@
             height: 100%;
             font-family: Arial, sans-serif;
         }
+        /* Vídeo de fundo */
         .video-bg {
             position: fixed;
             right: 0;
@@ -23,8 +24,10 @@
             z-index: -1;
             object-fit: cover;
         }
+        /* Centralizar conteúdo */
         .content {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
@@ -32,8 +35,16 @@
             color: white;
             background: rgba(0, 0, 0, 0.5);
         }
+        .name {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
         h1 {
             font-size: 4em;
+            margin: 0;
+        }
+        p {
+            font-size: 1.5em;
         }
     </style>
 </head>
@@ -46,16 +57,12 @@
 
     <!-- Conteúdo -->
     <div class="content">
-        <div id="text-container">
-            <h1 id="dynamic-text"></h1>
+        <div class="name">Kakazitu</div>
+        <div>
+            <h1 id="dynamic-text">PROGRAMANDO...</h1>
+            <p>Desenvolvedor | Criador de Conteúdo</p>
         </div>
     </div>
-
-    <!-- Áudio de fundo -->
-    <audio autoplay loop>
-        <source src="seu-audio.mp3" type="audio/mpeg">
-        Seu navegador não suporta o elemento de áudio.
-    </audio>
 
     <script>
         const textElement = document.getElementById('dynamic-text');
@@ -76,7 +83,11 @@
                 textElement.textContent = initialText.substring(0, index++);
                 if (index > initialText.length) {
                     isDeleting = true;
-                    setTimeout(typeEffect, 500);
+                    setTimeout(() => {
+                        textElement.textContent = '';
+                        index = finalText.length;
+                        setTimeout(typeEffect, 500);
+                    }, 500);
                 } else {
                     setTimeout(typeEffect, 100);
                 }
