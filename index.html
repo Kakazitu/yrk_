@@ -109,12 +109,6 @@
         </div>
     </div>
 
-    <!-- Áudio de fundo -->
-    <audio id="background-audio" autoplay loop>
-        <source src="seu-audio.mp3" type="audio/mpeg">
-        Seu navegador não suporta o elemento de áudio.
-    </audio>
-
     <script>
         const textElement = document.getElementById('dynamic-text');
         const initialText = 'PROGRAMANDO...';
@@ -165,12 +159,6 @@
                 }, 3000); // Tempo para o floco de neve desaparecer
             }
         });
-
-        // Verificar se o áudio está reproduzindo
-        const audio = document.getElementById('background-audio');
-        audio.oncanplaythrough = () => {
-            audio.muted = false; // Assegura que o áudio não esteja mudo
-        };
     </script>
 </body>
 </html>
