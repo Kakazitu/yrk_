@@ -46,6 +46,25 @@
         p {
             font-size: 1.5em;
         }
+        /* Estilo para flocos de neve */
+        .snowflake {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            pointer-events: none;
+            width: 8px;
+            height: 8px;
+            opacity: 0.8;
+            animation: fall linear;
+        }
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px);
+            }
+            100% {
+                transform: translateY(100vh);
+            }
+        }
     </style>
 </head>
 <body>
@@ -64,12 +83,19 @@
         </div>
     </div>
 
+    <!-- Áudio de fundo -->
+    <audio autoplay loop>
+        <source src="seu-audio.mp3" type="audio/mpeg">
+        Seu navegador não suporta o elemento de áudio.
+    </audio>
+
     <script>
         const textElement = document.getElementById('dynamic-text');
         const initialText = 'PROGRAMANDO...';
         const finalText = 'CULT777...';
         let index = 0;
         let isDeleting = false;
+        let isShowingFinalText = false;
 
         function typeEffect() {
             if (isDeleting) {
@@ -86,6 +112,7 @@
                     setTimeout(() => {
                         textElement.textContent = '';
                         index = finalText.length;
+                        isShowingFinalText = true;
                         setTimeout(typeEffect, 500);
                     }, 500);
                 } else {
@@ -97,11 +124,23 @@
         function start() {
             setTimeout(() => {
                 textElement.textContent = initialText;
-                setTimeout(typeEffect, 2000);
+                typeEffect();
             }, 500);
         }
 
         start();
+
+        // Efeito de neve
+        document.addEventListener('mousemove', (event) => {
+            const snowflake = document.createElement('div');
+            snowflake.classList.add('snowflake');
+            snowflake.style.left = `${event.clientX}px`;
+            snowflake.style.top = `${event.clientY}px`;
+            document.body.appendChild(snowflake);
+            setTimeout(() => {
+                snowflake.remove();
+            }, 1000); // Tempo para o floco de neve desaparecer
+        });
     </script>
 </body>
 </html>
