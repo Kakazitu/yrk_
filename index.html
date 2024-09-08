@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kakazitu - Perfil</title>
+    <!-- Adicionando um favicon -->
+    <link rel="icon" href="sua-foto.png" type="image/png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap">
     <style>
         * {
@@ -126,7 +128,7 @@
 
     <!-- Cabeçalho com nome e imagem -->
     <div class="header">
-        <img src="kakazitu.jpg" alt="Foto de Perfil">
+        <img src="sua-foto.png" alt="Foto de Perfil">
         <h1 id="header-text">Kakazitu</h1>
     </div>
 
@@ -142,10 +144,15 @@
     <script>
         const textElement = document.getElementById('dynamic-text');
         const headerTextElement = document.getElementById('header-text');
+        const titleElement = document.title;
+        
         const initialText = 'PROGRAMANDO...';
         const finalText = 'CULT777...';
         const typingDuration = 3500; // Tempo para animação de digitação (3.5 segundos)
         const displayDuration = 5000; // Tempo para exibir o texto (5 segundos)
+
+        const titles = ["Kakazitu", "DISCORD: yrk_777", "ROBLOX: @JORGEOMORTO"];
+        let titleIndex = 0;
 
         function updateText() {
             let startTime = Date.now();
@@ -183,6 +190,14 @@
         }
 
         updateText();
+
+        // Atualizando o título da página em loop
+        function updateTitle() {
+            document.title = titles[titleIndex];
+            titleIndex = (titleIndex + 1) % titles.length;
+        }
+
+        setInterval(updateTitle, 5000); // Muda o título a cada 5 segundos
 
         // Efeito de neve
         document.addEventListener('mousemove', (event) => {
