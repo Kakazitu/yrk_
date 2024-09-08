@@ -102,10 +102,10 @@
 
     <!-- Conteúdo -->
     <div class="content">
-        <div class="name">KAKAZITU</div>
+        <div class="name">Kakazitu</div>
         <div>
             <h1 id="dynamic-text">PROGRAMANDO...</h1>
-            <p>Desenvolvedor | print("hello world")</p>
+            <p>Desenvolvedor | Criador de Conteúdo</p>
         </div>
     </div>
 
@@ -129,12 +129,14 @@
                 
                 if (isShowingInitialText) {
                     textElement.textContent = initialText;
+                    textElement.style.animation = `typing 3.5s steps(40, end) infinite, blink-caret .75s step-end infinite`;
                     if (elapsedTime >= 5000) { // 5 segundos
                         isShowingInitialText = false;
                         startTime = Date.now(); // Reinicia o tempo para o próximo texto
                     }
                 } else {
                     textElement.textContent = finalText;
+                    textElement.style.animation = `typing 3.5s steps(40, end) infinite, blink-caret .75s step-end infinite`;
                     if (elapsedTime >= 5000) { // 5 segundos
                         isShowingInitialText = true;
                         startTime = Date.now(); // Reinicia o tempo para o próximo texto
