@@ -81,7 +81,7 @@
         <div class="name">Kakazitu</div>
         <div>
             <h1 id="dynamic-text">PROGRAMANDO...</h1>
-            <p>Desenvolvedor | Criador</p>
+            <p>Desenvolvedor | Criador de Conteúdo</p>
         </div>
     </div>
 
@@ -95,45 +95,35 @@
         const textElement = document.getElementById('dynamic-text');
         const initialText = 'PROGRAMANDO...';
         const finalText = 'CULT777...';
-        let index = 0;
-        let isDeleting = false;
 
-        function typeEffect() {
-            if (isDeleting) {
-                textElement.textContent = initialText.substring(0, index--);
-                if (index < 0) {
-                    isDeleting = false;
-                    index = 0;
-                    setTimeout(() => {
-                        textElement.textContent = finalText;
-                        index = finalText.length;
-                        setTimeout(() => {
-                            textElement.textContent = '';
-                            isDeleting = true;
-                            setTimeout(typeEffect, 500);
-                        }, 1000);
-                    }, 500);
-                }
-            } else {
-                textElement.textContent = initialText.substring(0, index++);
-                if (index > initialText.length) {
-                    isDeleting = true;
-                    setTimeout(() => {
-                        textElement.textContent = '';
-                        index = finalText.length;
-                        setTimeout(typeEffect, 500);
-                    }, 1000);
+        function updateText() {
+            let startTime = Date.now();
+            let isShowingInitialText = true;
+
+            function animateText() {
+                let elapsedTime = Date.now() - startTime;
+                
+                if (isShowingInitialText) {
+                    textElement.textContent = initialText;
+                    if (elapsedTime >= 5000) { // 5 segundos
+                        isShowingInitialText = false;
+                        startTime = Date.now(); // Reinicia o tempo para o próximo texto
+                    }
                 } else {
-                    setTimeout(typeEffect, 100);
+                    textElement.textContent = finalText;
+                    if (elapsedTime >= 5000) { // 5 segundos
+                        isShowingInitialText = true;
+                        startTime = Date.now(); // Reinicia o tempo para o próximo texto
+                    }
                 }
+                
+                requestAnimationFrame(animateText);
             }
+            
+            animateText();
         }
 
-        function start() {
-            typeEffect();
-        }
-
-        start();
+        updateText();
 
         // Efeito de neve
         document.addEventListener('mousemove', (event) => {
