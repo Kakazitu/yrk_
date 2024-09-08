@@ -85,6 +85,7 @@
         .links {
             margin-top: 20px;
             display: flex;
+            justify-content: center;
             gap: 20px;
         }
         .links a {
@@ -285,23 +286,15 @@
 
                 if (isShowingFirstHeader) {
                     headerTextElement.textContent = headerTitles[0];
-                    headerTextElement.style.animation = `typing ${typingDuration}ms steps(40, end) forwards, blink-caret .75s step-end infinite`;
                     if (elapsedHeaderTime >= displayDuration) {
-                        headerTextElement.style.animation = '';
-                        setTimeout(() => {
-                            isShowingFirstHeader = false;
-                            headerStartTime = Date.now();
-                        }, 500);
+                        isShowingFirstHeader = false;
+                        headerStartTime = Date.now();
                     }
                 } else {
                     headerTextElement.textContent = headerTitles[1];
-                    headerTextElement.style.animation = `typing ${typingDuration}ms steps(40, end) forwards, blink-caret .75s step-end infinite`;
                     if (elapsedHeaderTime >= displayDuration) {
-                        headerTextElement.style.animation = '';
-                        setTimeout(() => {
-                            isShowingFirstHeader = true;
-                            headerStartTime = Date.now();
-                        }, 500);
+                        isShowingFirstHeader = true;
+                        headerStartTime = Date.now();
                     }
                 }
 
