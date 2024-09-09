@@ -249,7 +249,7 @@
 
                 if (isShowingInitialText) {
                     textElement.textContent = initialText;
-                    textElement.style.animation = typing ${typingDuration}ms steps(40, end) forwards, blink-caret .75s step-end infinite;
+                    textElement.style.animation = `typing ${typingDuration}ms steps(40, end) forwards, blink-caret .75s step-end infinite`;
                     if (elapsedTime >= displayDuration) {
                         textElement.style.animation = '';
                         setTimeout(() => {
@@ -259,7 +259,7 @@
                     }
                 } else {
                     textElement.textContent = finalText;
-                    textElement.style.animation = typing ${typingDuration}ms steps(40, end) forwards, blink-caret .75s step-end infinite;
+                    textElement.style.animation = `typing ${typingDuration}ms steps(40, end) forwards, blink-caret .75s step-end infinite`;
                     if (elapsedTime >= displayDuration) {
                         textElement.style.animation = '';
                         setTimeout(() => {
