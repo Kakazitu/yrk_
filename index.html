@@ -67,52 +67,102 @@
             background: rgba(0, 0, 0, 0.5);
         }
         .name {
-            font-size: 4em;
+            font-size: 3em;
             margin-bottom: 20px;
+        }
+        h1 {
+            font-size: 4em;
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: .15em solid orange;
+            animation: blink-caret .75s step-end infinite;
+        }
+        p {
+            font-size: 1.5em;
+        }
+        /* Links para Discord e Roblox */
+        .links {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .links a {
             position: relative;
-            color: white;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+            display: inline-block;
         }
-
-        /* Estilo dos GIFs de raios ao redor do nome */
-        .lightning-gif {
+        .links img {
+            width: 50px; /* Tamanho ajustado */
+            height: 50px;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+        .links img:hover {
+            transform: scale(1.2);
+        }
+        .links .tooltip {
+            display: none;
             position: absolute;
-            width: 150px;
-            height: 150px;
-            opacity: 0.8;
-            pointer-events: none;
-            z-index: 1;
+            bottom: 120%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            white-space: nowrap;
         }
-
-        /* Posicionamento dos GIFs em torno do nome */
-        .lightning-1 {
-            top: -50px;
-            left: -100px;
-            animation: flicker 2s infinite;
+        .links a:hover .tooltip {
+            display: block;
         }
-        .lightning-2 {
-            top: -80px;
-            right: -100px;
-            animation: flicker 2s infinite 0.5s;
+        /* Painel de badges */
+        .badges-panel {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            padding: 5px 10px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            color: white;
         }
-        .lightning-3 {
-            bottom: -50px;
-            left: -100px;
-            animation: flicker 2s infinite 1s;
+        .badges-panel p {
+            margin-right: 10px;
+            font-size: 1.2em;
         }
-        .lightning-4 {
-            bottom: -80px;
-            right: -100px;
-            animation: flicker 2s infinite 1.5s;
+        .badge {
+            width: 24px; /* Ajuste o tamanho para ficar alinhado com o texto BADGES */
+            height: 24px;
+            margin-right: 5px;
+            position: relative;
+            transition: transform 0.3s;
         }
-
-        /* Animação para os GIFs piscarem */
-        @keyframes flicker {
-            0% { opacity: 0.2; }
-            50% { opacity: 1; }
-            100% { opacity: 0.2; }
+        .badge img {
+            width: 100%;
+            height: 100%;
         }
-
+        .badge:hover {
+            transform: scale(1.2);
+        }
+        .badge:hover .badge-tooltip {
+            display: block;
+        }
+        .badge-tooltip {
+            display: none;
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.7em;
+            white-space: nowrap;
+        }
         /* Animação de digitação */
         @keyframes typing {
             from {
@@ -147,14 +197,7 @@
 
     <!-- Conteúdo -->
     <div class="content">
-        <div class="name">
-            Kakazitu
-            <!-- GIFs de raios ao redor do nome -->
-            <img src="lightning1.gif" class="lightning-gif lightning-1" alt="Raio">
-            <img src="lightning2.gif" class="lightning-gif lightning-2" alt="Raio">
-            <img src="lightning3.gif" class="lightning-gif lightning-3" alt="Raio">
-            <img src="lightning4.gif" class="lightning-gif lightning-4" alt="Raio">
-        </div>
+        <div class="name">Kakazitu</div>
         <div>
             <h1 id="dynamic-text">PROGRAMANDO...</h1>
             <p>Desenvolvedor | Criador de Conteúdo</p>
@@ -171,5 +214,97 @@
             </div>
         </div>
     </div>
+
+    <!-- Painel de badges -->
+    <div class="badges-panel">
+        <p>BADGES:</p>
+        <div class="badge">
+            <img src="badge-owner.png" alt="Owner Badge">
+            <div class="badge-tooltip">OWNER/DONO</div>
+        </div>
+        <div class="badge">
+            <img src="badge-premium.png" alt="Premium Badge">
+            <div class="badge-tooltip">PREMIUM</div>
+        </div>
+    </div>
+
+    <script>
+        const textElement = document.getElementById('dynamic-text');
+        const headerTextElement = document.getElementById('header-text');
+        
+        const initialText = 'PROGRAMANDO...';
+        const finalText = 'DEVELOPER...';
+        const typingDuration = 3500; // 3.5 segundos
+        const displayDuration = 5000; // Exibir texto por 5 segundos
+
+        const headerTitles = ["DISCORD: yrk_777", "ROBLOX: @JORGEOMORTO"];
+        let headerIndex = 0;
+
+        function updateText() {
+            let startTime = Date.now();
+            let isShowingInitialText = true;
+
+            function animateText() {
+                let elapsedTime = Date.now() - startTime;
+
+                if (isShowingInitialText) {
+                    textElement.textContent = initialText;
+                    textElement.style.animation = typing ${typingDuration}ms steps(40, end) forwards, blink-caret .75s step-end infinite;
+                    if (elapsedTime >= displayDuration) {
+                        textElement.style.animation = '';
+                        setTimeout(() => {
+                            isShowingInitialText = false;
+                            startTime = Date.now();
+                        }, 500);
+                    }
+                } else {
+                    textElement.textContent = finalText;
+                    textElement.style.animation = typing ${typingDuration}ms steps(40, end) forwards, blink-caret .75s step-end infinite;
+                    if (elapsedTime >= displayDuration) {
+                        textElement.style.animation = '';
+                        setTimeout(() => {
+                            isShowingInitialText = true;
+                            startTime = Date.now();
+                        }, 500);
+                    }
+                }
+
+                requestAnimationFrame(animateText);
+            }
+
+            animateText();
+        }
+
+        updateText();
+
+        function updateHeaderText() {
+            let headerStartTime = Date.now();
+            let isShowingFirstHeader = true;
+
+            function animateHeader() {
+                let elapsedHeaderTime = Date.now() - headerStartTime;
+
+                if (isShowingFirstHeader) {
+                    headerTextElement.textContent = headerTitles[0];
+                    if (elapsedHeaderTime >= displayDuration) {
+                        isShowingFirstHeader = false;
+                        headerStartTime = Date.now();
+                    }
+                } else {
+                    headerTextElement.textContent = headerTitles[1];
+                    if (elapsedHeaderTime >= displayDuration) {
+                        isShowingFirstHeader = true;
+                        headerStartTime = Date.now();
+                    }
+                }
+
+                requestAnimationFrame(animateHeader);
+            }
+
+            animateHeader();
+        }
+
+        updateHeaderText();
+    </script>
 </body>
 </html>
