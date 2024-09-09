@@ -75,8 +75,6 @@
             margin: 0;
             white-space: nowrap;
             overflow: hidden;
-            border-right: .15em solid orange;
-            animation: blink-caret .75s step-end infinite;
         }
         p {
             font-size: 1.5em;
@@ -163,13 +161,13 @@
             font-size: 0.7em;
             white-space: nowrap;
         }
-        /* Animação de digitação */
+        /* Animação de digitação e apagamento */
         @keyframes typing {
             from { width: 0; }
-            to { width: 12em; }
+            to { width: 100%; }
         }
         @keyframes deleting {
-            from { width: 12em; }
+            from { width: 100%; }
             to { width: 0; }
         }
         @keyframes blink-caret {
@@ -177,15 +175,15 @@
             50% { border-color: orange; }
         }
         .typing {
-            overflow: hidden;
             border-right: .15em solid orange;
             white-space: nowrap;
+            overflow: hidden;
             animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
         }
         .deleting {
-            overflow: hidden;
-            border-right: .15em solid orange;
+            border-right: none;
             white-space: nowrap;
+            overflow: hidden;
             animation: deleting 3.5s steps(40, end);
         }
     </style>
