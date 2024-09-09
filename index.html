@@ -69,7 +69,66 @@
         .name {
             font-size: 3em;
             margin-bottom: 20px;
+            position: relative;
+            color: white;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
         }
+
+        /* Raio branco */
+        .lightning {
+            position: absolute;
+            width: 2px;
+            height: 60px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            animation: flash 1s infinite;
+        }
+
+        /* Animação de flash dos raios */
+        @keyframes flash {
+            0% {
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            30% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        /* Raios */
+        .lightning-1 {
+            top: -20px;
+            left: -40px;
+            animation-delay: 0s;
+            transform: rotate(45deg);
+        }
+
+        .lightning-2 {
+            top: -30px;
+            right: -40px;
+            animation-delay: 0.5s;
+            transform: rotate(-45deg);
+        }
+
+        .lightning-3 {
+            bottom: -40px;
+            left: 0px;
+            animation-delay: 1s;
+            transform: rotate(90deg);
+        }
+
+        .lightning-4 {
+            bottom: -50px;
+            right: 0px;
+            animation-delay: 1.5s;
+            transform: rotate(-90deg);
+        }
+
         h1 {
             font-size: 4em;
             margin: 0;
@@ -197,7 +256,14 @@
 
     <!-- Conteúdo -->
     <div class="content">
-        <div class="name">Kakazitu</div>
+        <div class="name">
+            Kakazitu
+            <!-- Raios animados ao redor do nome -->
+            <div class="lightning lightning-1"></div>
+            <div class="lightning lightning-2"></div>
+            <div class="lightning lightning-3"></div>
+            <div class="lightning lightning-4"></div>
+        </div>
         <div>
             <h1 id="dynamic-text">PROGRAMANDO...</h1>
             <p>Desenvolvedor | Criador de Conteúdo</p>
