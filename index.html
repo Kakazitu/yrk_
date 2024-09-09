@@ -74,59 +74,55 @@
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
         }
 
-        /* Raio branco */
+        /* Efeito de raios */
         .lightning {
             position: absolute;
-            width: 2px;
-            height: 60px;
-            background-color: white;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-            animation: flash 1s infinite;
+            width: 3px;
+            height: 100px;
+            background: white;
+            border-radius: 3px;
+            box-shadow: 0 0 20px white, 0 0 30px white, 0 0 40px white;
+            opacity: 0;
+            transform: scale(1) rotate(30deg);
+            animation: strike 1.5s infinite ease-in-out;
         }
 
-        /* Animação de flash dos raios */
-        @keyframes flash {
-            0% {
+        /* Animação dos raios */
+        @keyframes strike {
+            0%, 100% {
                 opacity: 0;
             }
-            10% {
+            10%, 90% {
                 opacity: 1;
-            }
-            30% {
-                opacity: 1;
-            }
-            100% {
-                opacity: 0;
+                transform: scale(1.1) rotate(30deg);
             }
         }
 
-        /* Raios */
-        .lightning-1 {
-            top: -20px;
-            left: -40px;
+        /* Posicionamento aleatório dos raios */
+        .lightning:nth-child(1) {
+            top: -50px;
+            left: 30px;
             animation-delay: 0s;
-            transform: rotate(45deg);
         }
-
-        .lightning-2 {
-            top: -30px;
-            right: -40px;
-            animation-delay: 0.5s;
-            transform: rotate(-45deg);
+        .lightning:nth-child(2) {
+            top: -80px;
+            right: 50px;
+            animation-delay: 0.3s;
         }
-
-        .lightning-3 {
-            bottom: -40px;
-            left: 0px;
-            animation-delay: 1s;
-            transform: rotate(90deg);
+        .lightning:nth-child(3) {
+            bottom: 20px;
+            left: -40px;
+            animation-delay: 0.6s;
         }
-
-        .lightning-4 {
+        .lightning:nth-child(4) {
             bottom: -50px;
-            right: 0px;
-            animation-delay: 1.5s;
-            transform: rotate(-90deg);
+            right: -50px;
+            animation-delay: 0.9s;
+        }
+        .lightning:nth-child(5) {
+            top: 100px;
+            left: -50px;
+            animation-delay: 1.2s;
         }
 
         h1 {
@@ -259,10 +255,11 @@
         <div class="name">
             Kakazitu
             <!-- Raios animados ao redor do nome -->
-            <div class="lightning lightning-1"></div>
-            <div class="lightning lightning-2"></div>
-            <div class="lightning lightning-3"></div>
-            <div class="lightning lightning-4"></div>
+            <div class="lightning"></div>
+            <div class="lightning"></div>
+            <div class="lightning"></div>
+            <div class="lightning"></div>
+            <div class="lightning"></div>
         </div>
         <div>
             <h1 id="dynamic-text">PROGRAMANDO...</h1>
@@ -285,92 +282,17 @@
     <div class="badges-panel">
         <p>BADGES:</p>
         <div class="badge">
-            <img src="badge-owner.png" alt="Owner Badge">
-            <div class="badge-tooltip">OWNER/DONO</div>
+            <img src="badge1.png" alt="Badge 1">
+            <div class="badge-tooltip">Badge 1</div>
         </div>
         <div class="badge">
-            <img src="badge-premium.png" alt="Premium Badge">
-            <div class="badge-tooltip">PREMIUM</div>
+            <img src="badge2.png" alt="Badge 2">
+            <div class="badge-tooltip">Badge 2</div>
+        </div>
+        <div class="badge">
+            <img src="badge3.png" alt="Badge 3">
+            <div class="badge-tooltip">Badge 3</div>
         </div>
     </div>
-
-    <script>
-        const textElement = document.getElementById('dynamic-text');
-        const headerTextElement = document.getElementById('header-text');
-        
-        const initialText = 'PROGRAMANDO...';
-        const finalText = 'DEVELOPER...';
-        const typingDuration = 3500; // 3.5 segundos
-        const displayDuration = 5000; // Exibir texto por 5 segundos
-
-        const headerTitles = ["DISCORD: yrk_777", "ROBLOX: @JORGEOMORTO"];
-        let headerIndex = 0;
-
-        function updateText() {
-            let startTime = Date.now();
-            let isShowingInitialText = true;
-
-            function animateText() {
-                let elapsedTime = Date.now() - startTime;
-
-                if (isShowingInitialText) {
-                    textElement.textContent = initialText;
-                    textElement.style.animation = typing ${typingDuration}ms steps(40, end) forwards, blink-caret .75s step-end infinite;
-                    if (elapsedTime >= displayDuration) {
-                        textElement.style.animation = '';
-                        setTimeout(() => {
-                            isShowingInitialText = false;
-                            startTime = Date.now();
-                        }, 500);
-                    }
-                } else {
-                    textElement.textContent = finalText;
-                    textElement.style.animation = typing ${typingDuration}ms steps(40, end) forwards, blink-caret .75s step-end infinite;
-                    if (elapsedTime >= displayDuration) {
-                        textElement.style.animation = '';
-                        setTimeout(() => {
-                            isShowingInitialText = true;
-                            startTime = Date.now();
-                        }, 500);
-                    }
-                }
-
-                requestAnimationFrame(animateText);
-            }
-
-            animateText();
-        }
-
-        updateText();
-
-        function updateHeaderText() {
-            let headerStartTime = Date.now();
-            let isShowingFirstHeader = true;
-
-            function animateHeader() {
-                let elapsedHeaderTime = Date.now() - headerStartTime;
-
-                if (isShowingFirstHeader) {
-                    headerTextElement.textContent = headerTitles[0];
-                    if (elapsedHeaderTime >= displayDuration) {
-                        isShowingFirstHeader = false;
-                        headerStartTime = Date.now();
-                    }
-                } else {
-                    headerTextElement.textContent = headerTitles[1];
-                    if (elapsedHeaderTime >= displayDuration) {
-                        isShowingFirstHeader = true;
-                        headerStartTime = Date.now();
-                    }
-                }
-
-                requestAnimationFrame(animateHeader);
-            }
-
-            animateHeader();
-        }
-
-        updateHeaderText();
-    </script>
 </body>
 </html>
