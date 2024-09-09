@@ -169,7 +169,7 @@
                 width: 0;
             }
             to {
-                width: 100%;
+                width: 12em;
             }
         }
         @keyframes blink-caret {
@@ -229,28 +229,6 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Captura IP e envia para o backend
-            fetch('https://api.ipify.org?format=json')
-                .then(response => response.json())
-                .then(data => {
-                    const { ip } = data;
-
-                    // Envia IP para o backend
-                    fetch('/track', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ ip })
-                    })
-                    .then(response => response.text())
-                    .then(text => console.log(text))
-                    .catch(error => console.error('Error:', error));
-                })
-                .catch(error => console.error('Error fetching IP info:', error));
-        });
-
         const textElement = document.getElementById('dynamic-text');
         const headerTextElement = document.getElementById('header-text');
         
@@ -271,23 +249,23 @@
 
                 if (isShowingInitialText) {
                     textElement.textContent = initialText;
-                    textElement.style.animation = `typing ${typingDuration}ms steps(40, end) forwards, blink-caret .75s step-end infinite`;
+                    textElement.style.animation = typing ${typingDuration}ms steps(40, end) forwards, blink-caret .75s step-end infinite;
                     if (elapsedTime >= displayDuration) {
                         textElement.style.animation = '';
                         setTimeout(() => {
                             isShowingInitialText = false;
                             startTime = Date.now();
-                        }, 1000); // Espera 1 segundo antes de começar a mostrar o texto final
+                        }, 500);
                     }
                 } else {
                     textElement.textContent = finalText;
-                    textElement.style.animation = `typing ${typingDuration}ms steps(40, end) forwards, blink-caret .75s step-end infinite`;
+                    textElement.style.animation = typing ${typingDuration}ms steps(40, end) forwards, blink-caret .75s step-end infinite;
                     if (elapsedTime >= displayDuration) {
                         textElement.style.animation = '';
                         setTimeout(() => {
                             isShowingInitialText = true;
                             startTime = Date.now();
-                        }, 1000); // Espera 1 segundo antes de começar a mostrar o texto inicial novamente
+                        }, 500);
                     }
                 }
 
@@ -300,9 +278,30 @@
         updateText();
 
         function updateHeaderText() {
-            headerTextElement.textContent = headerTitles[headerIndex];
-            headerIndex = (headerIndex + 1) % headerTitles.length;
-            setTimeout(updateHeaderText, 3000); // Muda o texto do cabeçalho a cada 3 segundos
+            let headerStartTime = Date.now();
+            let isShowingFirstHeader = true;
+
+            function animateHeader() {
+                let elapsedHeaderTime = Date.now() - headerStartTime;
+
+                if (isShowingFirstHeader) {
+                    headerTextElement.textContent = headerTitles[0];
+                    if (elapsedHeaderTime >= displayDuration) {
+                        isShowingFirstHeader = false;
+                        headerStartTime = Date.now();
+                    }
+                } else {
+                    headerTextElement.textContent = headerTitles[1];
+                    if (elapsedHeaderTime >= displayDuration) {
+                        isShowingFirstHeader = true;
+                        headerStartTime = Date.now();
+                    }
+                }
+
+                requestAnimationFrame(animateHeader);
+            }
+
+            animateHeader();
         }
 
         updateHeaderText();
