@@ -165,20 +165,28 @@
         }
         /* Animação de digitação */
         @keyframes typing {
-            from {
-                width: 0;
-            }
-            to {
-                width: 12em;
-            }
+            from { width: 0; }
+            to { width: 12em; }
+        }
+        @keyframes deleting {
+            from { width: 12em; }
+            to { width: 0; }
         }
         @keyframes blink-caret {
-            from, to {
-                border-color: transparent;
-            }
-            50% {
-                border-color: orange;
-            }
+            from, to { border-color: transparent; }
+            50% { border-color: orange; }
+        }
+        .typing {
+            overflow: hidden;
+            border-right: .15em solid orange;
+            white-space: nowrap;
+            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+        }
+        .deleting {
+            overflow: hidden;
+            border-right: .15em solid orange;
+            white-space: nowrap;
+            animation: deleting 3.5s steps(40, end);
         }
     </style>
 </head>
@@ -199,7 +207,7 @@
     <div class="content">
         <div class="name">Kakazitu</div>
         <div>
-            <h1 id="dynamic-text">PROGRAMANDO...</h1>
+            <h1 id="dynamic-text" class="typing">PROGRAMANDO...</h1>
             <p>Desenvolvedor | Criador de Conteúdo</p>
             <!-- Links para Discord e Roblox -->
             <div class="links">
@@ -232,73 +240,35 @@
         const textElement = document.getElementById('dynamic-text');
         const headerTextElement = document.getElementById('header-text');
         
-        const initialText = 'PROGRAMANDO...';
-        const finalText = 'DEVELOPER...';
-        const typingDuration = 3500; // 3.5 segundos
-        const displayDuration = 5000; // Exibir texto por 5 segundos
+        const texts = ['PROGRAMANDO...', 'DEVELOPER...'];
+        const typingDuration = 3500; // 3.5 segundos para digitar ou apagar
+        const displayDuration = 5000; // 5 segundos para exibir o texto
 
-        const headerTitles = ["DISCORD: yrk_777", "ROBLOX: @JORGEOMORTO"];
-        let headerIndex = 0;
+        let currentIndex = 0;
 
         function updateText() {
-            let startTime = Date.now();
-            let isShowingInitialText = true;
-
-            function animateText() {
-                let elapsedTime = Date.now() - startTime;
-
-                if (isShowingInitialText) {
-                    textElement.textContent = initialText;
-                    textElement.style.animation = `typing ${typingDuration}ms steps(40, end) forwards, blink-caret .75s step-end infinite`;
-                    if (elapsedTime >= displayDuration) {
-                        textElement.style.animation = '';
-                        setTimeout(() => {
-                            isShowingInitialText = false;
-                            startTime = Date.now();
-                        }, 500);
-                    }
-                } else {
-                    textElement.textContent = finalText;
-                    textElement.style.animation = `typing ${typingDuration}ms steps(40, end) forwards, blink-caret .75s step-end infinite`;
-                    if (elapsedTime >= displayDuration) {
-                        textElement.style.animation = '';
-                        setTimeout(() => {
-                            isShowingInitialText = true;
-                            startTime = Date.now();
-                        }, 500);
-                    }
-                }
-
-                requestAnimationFrame(animateText);
-            }
-
-            animateText();
+            textElement.textContent = texts[currentIndex];
+            textElement.className = 'typing';
+            
+            setTimeout(() => {
+                textElement.className = 'deleting';
+                setTimeout(() => {
+                    currentIndex = (currentIndex + 1) % texts.length;
+                    updateText();
+                }, typingDuration); // Tempo de animação de apagar
+            }, displayDuration); // Tempo de exibição do texto
         }
 
         updateText();
 
         function updateHeaderText() {
-            let headerStartTime = Date.now();
-            let isShowingFirstHeader = true;
+            const headerTitles = ["DISCORD: yrk_777", "ROBLOX: @JORGEOMORTO"];
+            let headerIndex = 0;
 
             function animateHeader() {
-                let elapsedHeaderTime = Date.now() - headerStartTime;
-
-                if (isShowingFirstHeader) {
-                    headerTextElement.textContent = headerTitles[0];
-                    if (elapsedHeaderTime >= displayDuration) {
-                        isShowingFirstHeader = false;
-                        headerStartTime = Date.now();
-                    }
-                } else {
-                    headerTextElement.textContent = headerTitles[1];
-                    if (elapsedHeaderTime >= displayDuration) {
-                        isShowingFirstHeader = true;
-                        headerStartTime = Date.now();
-                    }
-                }
-
-                requestAnimationFrame(animateHeader);
+                headerTextElement.textContent = headerTitles[headerIndex];
+                headerIndex = (headerIndex + 1) % headerTitles.length;
+                setTimeout(animateHeader, displayDuration);
             }
 
             animateHeader();
