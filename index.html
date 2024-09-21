@@ -190,13 +190,10 @@
 </head>
 <body>
     <!-- Vídeo de fundo -->
-    <video class="video-bg" autoplay loop id="background-video">
+    <video class="video-bg" autoplay loop controls>
         <source src="seu-video.mp4" type="video/mp4">
         Seu navegador não suporta vídeos em HTML5.
     </video>
-
-    <!-- Botão para ativar/desativar o som -->
-    <button id="sound-toggle" style="position: absolute; top: 10px; left: 10px; z-index: 20; background-color: rgba(0,0,0,0.7); color: white; border: none; padding: 10px; cursor: pointer;">Ativar Som</button>
 
     <!-- Cabeçalho com nome e imagem -->
     <div class="header">
@@ -240,9 +237,7 @@
     <script>
         const textElement = document.getElementById('dynamic-text');
         const headerTextElement = document.getElementById('header-text');
-        const video = document.getElementById('background-video');
-        const soundToggle = document.getElementById('sound-toggle');
-
+        
         const texts = ['PROGRAMANDO...', 'DEVELOPER...'];
         const typingDuration = 3500; // 3.5 segundos para digitar ou apagar
         const displayDuration = 5000; // 5 segundos para exibir o texto
@@ -264,16 +259,20 @@
 
         updateText();
 
-        // Ativar/desativar som do vídeo
-        soundToggle.addEventListener('click', function() {
-            if (video.muted) {
-                video.muted = false;
-                soundToggle.textContent = 'Desativar Som';
-            } else {
-                video.muted = true;
-                soundToggle.textContent = 'Ativar Som';
+        function updateHeaderText() {
+            const headerTitles = ["DISCORD: yrk_777", "ROBLOX: @JORGEOMORTO"];
+            let headerIndex = 0;
+
+            function animateHeader() {
+                headerTextElement.textContent = headerTitles[headerIndex];
+                headerIndex = (headerIndex + 1) % headerTitles.length;
+                setTimeout(animateHeader, displayDuration);
             }
-        });
+
+            animateHeader();
+        }
+
+        updateHeaderText();
     </script>
 </body>
 </html>
