@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kakazitu</title>
-    <!-- Favicon -->
     <link rel="icon" href="sua-foto.png" type="image/png">
-    <!-- Fonte de programação -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap">
     <style>
         * {
@@ -18,7 +16,6 @@
             height: 100%;
             font-family: 'Fira Code', monospace;
         }
-        /* Vídeo de fundo */
         .video-bg {
             position: fixed;
             right: 0;
@@ -28,7 +25,6 @@
             z-index: -1;
             object-fit: cover;
         }
-        /* Estilo do cabeçalho */
         .header {
             position: fixed;
             top: 0;
@@ -55,7 +51,6 @@
             border-right: .15em solid orange;
             animation: blink-caret .75s step-end infinite;
         }
-        /* Centralizar conteúdo */
         .content {
             display: flex;
             flex-direction: column;
@@ -79,7 +74,6 @@
         p {
             font-size: 1.5em;
         }
-        /* Links para Discord e Roblox */
         .links {
             margin-top: 20px;
             display: flex;
@@ -91,7 +85,7 @@
             display: inline-block;
         }
         .links img {
-            width: 50px; /* Tamanho ajustado */
+            width: 50px;
             height: 50px;
             border-radius: 50%;
             transition: transform 0.3s;
@@ -115,7 +109,6 @@
         .links a:hover .tooltip {
             display: block;
         }
-        /* Painel de badges */
         .badges-panel {
             position: fixed;
             bottom: 20px;
@@ -133,7 +126,7 @@
             font-size: 1.2em;
         }
         .badge {
-            width: 24px; /* Ajuste o tamanho para ficar alinhado com o texto BADGES */
+            width: 24px;
             height: 24px;
             margin-right: 5px;
             position: relative;
@@ -161,7 +154,6 @@
             font-size: 0.7em;
             white-space: nowrap;
         }
-        /* Animação de digitação e apagamento */
         @keyframes typing {
             from { width: 0; }
             to { width: 100%; }
@@ -189,25 +181,21 @@
     </style>
 </head>
 <body>
-    <!-- Vídeo de fundo -->
-    <video class="video-bg" autoplay loop controls>
+    <video class="video-bg" autoplay loop muted>
         <source src="seu-video.mp4" type="video/mp4">
         Seu navegador não suporta vídeos em HTML5.
     </video>
 
-    <!-- Cabeçalho com nome e imagem -->
     <div class="header">
         <img src="sua-foto.png" alt="Foto de Perfil">
         <h1 id="header-text">DISCORD: yrk_777</h1>
     </div>
 
-    <!-- Conteúdo -->
     <div class="content">
         <div class="name">Kakazitu</div>
         <div>
             <h1 id="dynamic-text" class="typing">PROGRAMANDO...</h1>
             <p>Desenvolvedor | Criador de Conteúdo</p>
-            <!-- Links para Discord e Roblox -->
             <div class="links">
                 <a href="http://discordapp.com/users/749409557209677835" target="_blank">
                     <img src="discord-logo1.png" alt="Discord Logo">
@@ -221,7 +209,6 @@
         </div>
     </div>
 
-    <!-- Painel de badges -->
     <div class="badges-panel">
         <p>BADGES:</p>
         <div class="badge">
@@ -239,8 +226,8 @@
         const headerTextElement = document.getElementById('header-text');
         
         const texts = ['PROGRAMANDO...', 'DEVELOPER...'];
-        const typingDuration = 3500; // 3.5 segundos para digitar ou apagar
-        const displayDuration = 5000; // 5 segundos para exibir o texto
+        const typingDuration = 3500;
+        const displayDuration = 5000;
 
         let currentIndex = 0;
 
@@ -253,8 +240,8 @@
                 setTimeout(() => {
                     currentIndex = (currentIndex + 1) % texts.length;
                     updateText();
-                }, typingDuration); // Tempo de animação de apagar
-            }, displayDuration); // Tempo de exibição do texto
+                }, typingDuration);
+            }, displayDuration);
         }
 
         updateText();
