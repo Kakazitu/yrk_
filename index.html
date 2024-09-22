@@ -43,14 +43,6 @@
             border-radius: 50%;
             margin-right: 15px;
         }
-        .header h1 {
-            font-size: 1.5em;
-            margin: 0;
-            white-space: nowrap;
-            overflow: hidden;
-            border-right: .15em solid orange;
-            animation: blink-caret .75s step-end infinite;
-        }
         .content {
             display: flex;
             flex-direction: column;
@@ -93,22 +85,6 @@
         .links img:hover {
             transform: scale(1.2);
         }
-        .links .tooltip {
-            display: none;
-            position: absolute;
-            bottom: 120%;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 0.9em;
-            white-space: nowrap;
-        }
-        .links a:hover .tooltip {
-            display: block;
-        }
         .badges-panel {
             position: fixed;
             bottom: 20px;
@@ -139,28 +115,9 @@
         .badge:hover {
             transform: scale(1.2);
         }
-        .badge:hover .badge-tooltip {
-            display: block;
-        }
-        .badge-tooltip {
-            display: none;
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.8);
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 0.7em;
-            white-space: nowrap;
-        }
         @keyframes typing {
             from { width: 0; }
             to { width: 100%; }
-        }
-        @keyframes deleting {
-            from { width: 100%; }
-            to { width: 0; }
         }
         @keyframes blink-caret {
             from, to { border-color: transparent; }
@@ -172,16 +129,10 @@
             overflow: hidden;
             animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
         }
-        .deleting {
-            border-right: .15em solid orange;
-            white-space: nowrap;
-            overflow: hidden;
-            animation: deleting 3.5s steps(40, end) forwards;
-        }
     </style>
 </head>
 <body>
-    <video class="video-bg" autoplay loop playsinline>
+    <video class="video-bg" autoplay loop muted playsinline>
         <source src="seu-video.mp4" type="video/mp4">
         Seu navegador não suporta vídeos em HTML5.
     </video>
@@ -199,11 +150,9 @@
             <div class="links">
                 <a href="http://discordapp.com/users/749409557209677835" target="_blank">
                     <img src="discord-logo1.png" alt="Discord Logo">
-                    <div class="tooltip">DISCORD</div>
                 </a>
                 <a href="https://www.roblox.com/pt/users/2798972541/profile" target="_blank">
                     <img src="roblox-logo1.png" alt="Roblox Logo">
-                    <div class="tooltip">ROBLOX</div>
                 </a>
             </div>
         </div>
@@ -213,11 +162,9 @@
         <p>BADGES:</p>
         <div class="badge">
             <img src="badge-owner.png" alt="Owner Badge">
-            <div class="badge-tooltip">OWNER/DONO</div>
         </div>
         <div class="badge">
             <img src="badge-premium.png" alt="Premium Badge">
-            <div class="badge-tooltip">PREMIUM</div>
         </div>
     </div>
 
@@ -226,22 +173,12 @@
         const headerTextElement = document.getElementById('header-text');
         
         const texts = ['PROGRAMANDO...', 'DEVELOPER...'];
-        const typingDuration = 3500;
-        const displayDuration = 5000;
-
         let currentIndex = 0;
 
         function updateText() {
             textElement.textContent = texts[currentIndex];
-            textElement.className = 'typing';
-            
-            setTimeout(() => {
-                textElement.className = 'deleting';
-                setTimeout(() => {
-                    currentIndex = (currentIndex + 1) % texts.length;
-                    updateText();
-                }, typingDuration);
-            }, displayDuration);
+            currentIndex = (currentIndex + 1) % texts.length;
+            setTimeout(updateText, 5000);
         }
 
         updateText();
@@ -253,7 +190,7 @@
             function animateHeader() {
                 headerTextElement.textContent = headerTitles[headerIndex];
                 headerIndex = (headerIndex + 1) % headerTitles.length;
-                setTimeout(animateHeader, displayDuration);
+                setTimeout(animateHeader, 5000);
             }
 
             animateHeader();
