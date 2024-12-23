@@ -110,6 +110,14 @@
             color: #666;
         }
 
+        .volume-control {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #ccc;
+        }
+
         audio {
             display: none;
         }
@@ -135,6 +143,12 @@
         </div>
 
         <footer>&copy; 2024 Kakazitu | Todos os direitos reservados</footer>
+
+        <!-- Controle de volume -->
+        <div class="volume-control">
+            <label for="volumeSlider">Volume:</label>
+            <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="1">
+        </div>
     </div>
 
     <audio id="musicPlayer" loop>
@@ -149,6 +163,7 @@
         const introScreen = document.getElementById("introScreen");
         const mainContent = document.getElementById("mainContent");
         const tapText = document.getElementById("tapText");
+        const volumeSlider = document.getElementById("volumeSlider");
 
         function tocarMusicaAleatoria() {
             let randomIndex;
@@ -163,6 +178,11 @@
 
             lastPlayed = randomIndex;
         }
+
+        // Ajusta o volume
+        volumeSlider.addEventListener("input", function() {
+            musicPlayer.volume = volumeSlider.value;
+        });
 
         introScreen.addEventListener("click", function() {
             introScreen.style.opacity = 0;
