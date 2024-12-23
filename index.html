@@ -12,6 +12,7 @@
             padding: 0;
             box-sizing: border-box;
         }
+
         body, html {
             height: 100%;
             font-family: 'Fira Code', monospace;
@@ -20,11 +21,41 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
+            overflow: hidden;
+            transition: background-color 1s ease-in-out;
         }
+
+        /* Tela inicial "Tap to Enter" */
+        .intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px); /* Aplica o efeito blur no fundo */
+            z-index: 9999;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .intro-screen h1 {
+            font-size: 2.5em;
+            color: white;
+            cursor: pointer;
+            text-align: center;
+        }
+
         .container {
             text-align: center;
             max-width: 600px;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
         }
+
         .profile-img {
             width: 120px;
             height: 120px;
@@ -33,11 +64,13 @@
             border: 3px solid white;
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
         }
+
         .name {
             font-size: 2.5em;
             margin-bottom: 10px;
             color: #ff4747;
         }
+
         .description {
             font-size: 1.2em;
             color: #ccc;
@@ -50,6 +83,7 @@
             gap: 20px;
             margin-bottom: 30px;
         }
+
         .links a {
             display: flex;
             justify-content: center;
@@ -60,23 +94,37 @@
             border-radius: 50%;
             transition: transform 0.3s, background 0.3s;
         }
+
         .links a img {
             width: 30px;
             height: 30px;
         }
+
         .links a:hover {
             transform: scale(1.2);
             background: #ff4747;
         }
+
         footer {
             margin-top: 30px;
             font-size: 0.9em;
             color: #666;
         }
+
+        /* Música em background */
+        audio {
+            display: none;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
+    <!-- Tela de introdução -->
+    <div class="intro-screen" id="introScreen">
+        <h1 id="tapText">Tap to Enter</h1>
+    </div>
+
+    <!-- Conteúdo principal (inicialmente invisível) -->
+    <div class="container" id="mainContent">
         <img src="kakazitu.png" alt="Foto de Perfil" class="profile-img">
         <div class="name">Kakazitu</div>
         <div class="description">Desenvolvedor | Criador de Conteúdo</div>
@@ -94,7 +142,7 @@
     </div>
 
     <!-- Música em background -->
-    <audio id="musicPlayer" autoplay loop>
+    <audio id="musicPlayer" loop>
         <source id="musicSource" src="musica1.mp3" type="audio/mp3">
         Seu navegador não suporta o elemento de áudio.
     </audio>
@@ -103,6 +151,10 @@
         // Array com as músicas
         const musicas = ["musica1.mp3", "musica2.mp3", "musica3.mp3"];
         let lastPlayed = -1;  // Variável para armazenar o índice da última música tocada
+        const musicPlayer = document.getElementById("musicPlayer");
+        const introScreen = document.getElementById("introScreen");
+        const mainContent = document.getElementById("mainContent");
+        const tapText = document.getElementById("tapText");
 
         // Função para tocar uma música aleatória
         function tocarMusicaAleatoria() {
@@ -111,29 +163,27 @@
                 randomIndex = Math.floor(Math.random() * musicas.length);  // Escolhe aleatoriamente uma música
             } while (randomIndex === lastPlayed);  // Garante que a mesma música não será tocada duas vezes consecutivas
 
-            // Atualiza a música no player
-            const musicPlayer = document.getElementById("musicPlayer");
+            // Atualiza o caminho da música no player
             const musicSource = document.getElementById("musicSource");
-
-            // Atualiza o atributo src para a nova música e carrega a nova música
             musicSource.src = musicas[randomIndex];  
             musicPlayer.load();  // Carrega o novo arquivo de áudio
-
-            // Toca a nova música
-            musicPlayer.play();  
+            musicPlayer.play();  // Toca a nova música
 
             // Atualiza o índice da última música tocada
             lastPlayed = randomIndex;
         }
 
-        // Tocar a primeira música assim que a página for carregada
-        window.onload = function() {
-            tocarMusicaAleatoria();  // Toca uma música aleatória
-        }
+        // Função para iniciar a página quando o usuário tocar na tela
+        tapText.addEventListener("click", function() {
+            // Efeito fade-out na tela inicial
+            introScreen.style.opacity = 0;
 
-        // Adiciona um evento para tocar uma nova música quando a atual termina
-        document.getElementById("musicPlayer").addEventListener("ended", function() {
-            tocarMusicaAleatoria();
+            // Após a tela desaparecer, carregamos o conteúdo principal e tocamos a música
+            setTimeout(function() {
+                introScreen.style.display = "none";  // Remove a tela de introdução
+                mainContent.style.opacity = 1;  // Torna o conteúdo visível
+                tocarMusicaAleatoria();  // Toca uma música aleatória
+            }, 1000);  // Atraso para o efeito fade-out
         });
     </script>
 </body>
