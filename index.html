@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfólio - Kakazitu</title>
+    <title>Kakazitu - Portfólio</title>
     <link rel="icon" href="sua-foto.png" type="image/png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap">
     <style>
@@ -68,46 +68,6 @@
             transform: scale(1.2);
             background: #ff4747;
         }
-        .badges-panel {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        .badge {
-            position: relative;
-            width: 50px;
-            height: 50px;
-            transition: transform 0.3s;
-        }
-        .badge img {
-            width: 100%;
-            height: 100%;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-        }
-        .badge:hover {
-            transform: scale(1.2);
-        }
-        .badge::after {
-            content: attr(data-title);
-            position: absolute;
-            top: 110%;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 0.8em;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s, transform 0.3s;
-        }
-        .badge:hover::after {
-            opacity: 1;
-            transform: translateX(-50%) translateY(10px);
-        }
         footer {
             margin-top: 30px;
             font-size: 0.9em;
@@ -122,21 +82,12 @@
         <div class="subtitle">Desenvolvedor | Criador de Conteúdo</div>
 
         <div class="links">
-            <a href="http://discordapp.com/users/749409557209677835" target="_blank">
+            <a href="http://discordapp.com/users/1136065248420438047" target="_blank">
                 <img src="discord-logo1.png" alt="Discord Logo">
             </a>
             <a href="https://www.roblox.com/pt/users/2798972541/profile" target="_blank">
                 <img src="roblox-logo1.png" alt="Roblox Logo">
             </a>
-        </div>
-
-        <div class="badges-panel">
-            <div class="badge" data-title="Owner Badge">
-                <img src="badge-owner.png" alt="Owner Badge">
-            </div>
-            <div class="badge" data-title="Premium Badge">
-                <img src="badge-premium.png" alt="Premium Badge">
-            </div>
         </div>
 
         <footer>&copy; 2024 Kakazitu | Todos os direitos reservados</footer>
