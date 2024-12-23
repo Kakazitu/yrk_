@@ -47,19 +47,26 @@
             border-right: 2px solid #ff4747;
             white-space: nowrap;
             width: 0;
-            animation: typing 6s steps(22, end), blink 0.5s step-end infinite alternate, erase 6s steps(22, end) 6s forwards;
+            animation: typing 6s steps(30, end) infinite, blink 0.75s step-end infinite alternate;
         }
         @keyframes typing {
             from { width: 0; }
-            to { width: 22ch; }
-        }
-        @keyframes erase {
-            from { width: 22ch; }
-            to { width: 0; }
+            to { width: 30ch; }
         }
         @keyframes blink {
             50% { border-color: transparent; }
         }
+        /* Definindo intervalo de 3 segundos onde o texto ficará visível antes de apagar */
+        .typing-animation::after {
+            content: '';
+            animation: visibleFor 9s infinite;
+        }
+
+        @keyframes visibleFor {
+            0%, 66% { width: 30ch; }  /* Texto visível durante 3 segundos após ser totalmente escrito */
+            66.01%, 100% { width: 0; } /* Apagar o texto após 3 segundos */
+        }
+
         .links {
             display: flex;
             justify-content: center;
