@@ -126,6 +126,9 @@
         window.onload = function() {
             tocarMusicaAleatoria();  // Toca uma música aleatória
         }
+
+        // Adiciona um evento para tocar uma nova música quando a atual termina
+        document.getElementById("musicPlayer").addEventListener("ended", tocarMusicaAleatoria);
     </script>
 </body>
 </html>
