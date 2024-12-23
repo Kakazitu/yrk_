@@ -39,10 +39,26 @@
             margin-bottom: 10px;
             color: #ff4747;
         }
-        .subtitle {
+        .typing-animation {
             font-size: 1.2em;
             margin-bottom: 30px;
             color: #ccc;
+            overflow: hidden;
+            border-right: 2px solid #ff4747;
+            white-space: nowrap;
+            width: 0;
+            animation: typing 3s steps(22, end), blink 0.5s step-end infinite alternate, erase 3s steps(22, end) 4s infinite;
+        }
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 22ch; }
+        }
+        @keyframes erase {
+            from { width: 22ch; }
+            to { width: 0; }
+        }
+        @keyframes blink {
+            50% { border-color: transparent; }
         }
         .links {
             display: flex;
@@ -79,7 +95,7 @@
     <div class="container">
         <img src="sua-foto.png" alt="Foto de Perfil" class="profile-img">
         <div class="name">Kakazitu</div>
-        <div class="subtitle">Desenvolvedor | Criador de Conteúdo</div>
+        <div class="typing-animation">Desenvolvedor | Criador de Conteúdo</div>
 
         <div class="links">
             <a href="http://discordapp.com/users/1136065248420438047" target="_blank">
