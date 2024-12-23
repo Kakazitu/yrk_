@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kakazitu - Portfólio</title>
+    <title>--Kakazitu--</title>
     <link rel="icon" href="kakazitu.png" type="image/png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap">
     <style>
@@ -92,5 +92,40 @@
 
         <footer>&copy; 2024 Kakazitu | Todos os direitos reservados</footer>
     </div>
+
+    <!-- Música em background -->
+    <audio id="musicPlayer" autoplay loop>
+        <source id="musicSource" src="musica1.mp3" type="audio/mp3">
+        Seu navegador não suporta o elemento de áudio.
+    </audio>
+
+    <script>
+        // Array com as músicas
+        const musicas = ["musica1.mp3", "musica2.mp3", "musica3.mp3"];
+        let lastPlayed = -1;  // Variável para armazenar o índice da última música tocada
+
+        // Função para tocar uma música aleatória
+        function tocarMusicaAleatoria() {
+            let randomIndex;
+            do {
+                randomIndex = Math.floor(Math.random() * musicas.length);  // Escolhe aleatoriamente uma música
+            } while (randomIndex === lastPlayed);  // Garante que a mesma música não será tocada duas vezes consecutivas
+
+            // Atualiza a música no player
+            const musicPlayer = document.getElementById("musicPlayer");
+            const musicSource = document.getElementById("musicSource");
+            musicSource.src = musicas[randomIndex];  // Define o caminho da nova música
+            musicPlayer.load();  // Carrega a nova música
+            musicPlayer.play();  // Toca a nova música
+
+            // Atualiza o índice da última música tocada
+            lastPlayed = randomIndex;
+        }
+
+        // Tocar a primeira música assim que a página for carregada
+        window.onload = function() {
+            tocarMusicaAleatoria();  // Toca uma música aleatória
+        }
+    </script>
 </body>
 </html>
