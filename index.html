@@ -47,20 +47,34 @@
             border-right: 2px solid #ff4747;
             white-space: nowrap;
             width: 0;
-            animation: typing 6s steps(30, end) 1, visibleFor 9s 6s forwards, erase 3s steps(30, end) 15s forwards;
         }
+
+        /* Animação de digitação */
         @keyframes typing {
             from { width: 0; }
-            to { width: 30ch; }
+            to { width: 15ch; }
         }
+
+        /* Animação de apagar */
         @keyframes erase {
-            from { width: 30ch; }
+            from { width: 15ch; }
             to { width: 0; }
         }
-        @keyframes visibleFor {
-            0%, 66% { width: 30ch; }  /* Texto visível por 3 segundos */
-            66.01%, 100% { width: 0; } /* Apagar o texto após 3 segundos */
+
+        /* Ciclo de animação para alternar entre as duas frases */
+        .dev-text {
+            animation: typing 3s steps(15, end) 1, visibleFor 5s 3s forwards, erase 2s steps(15, end) 8s forwards;
         }
+
+        .creator-text {
+            animation: typing 3s steps(22, end) 1, visibleFor 5s 3s forwards, erase 2s steps(22, end) 8s forwards;
+        }
+
+        @keyframes visibleFor {
+            0%, 66% { width: 15ch; }
+            66.01%, 100% { width: 0; }
+        }
+
         .links {
             display: flex;
             justify-content: center;
@@ -96,7 +110,8 @@
     <div class="container">
         <img src="kakazitu.png" alt="Foto de Perfil" class="profile-img">
         <div class="name">Kakazitu</div>
-        <div class="typing-animation">Desenvolvedor | Criador de Conteúdo</div>
+        <div class="typing-animation dev-text">Desenvolvedor</div>
+        <div class="typing-animation creator-text" style="display: none;">Criador de Conteúdo</div>
 
         <div class="links">
             <a href="http://discordapp.com/users/1136065248420438047" target="_blank">
@@ -109,5 +124,17 @@
 
         <footer>&copy; 2024 Kakazitu | Todos os direitos reservados</footer>
     </div>
+
+    <script>
+        let devText = document.querySelector('.dev-text');
+        let creatorText = document.querySelector('.creator-text');
+
+        function toggleText() {
+            devText.style.display = devText.style.display === 'none' ? 'block' : 'none';
+            creatorText.style.display = creatorText.style.display === 'none' ? 'block' : 'none';
+        }
+
+        setInterval(toggleText, 18000); // Alterna entre as duas frases a cada 18 segundos
+    </script>
 </body>
 </html>
