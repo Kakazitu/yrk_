@@ -121,12 +121,13 @@
         /* Estilo para a barra de volume */
         input[type="range"] {
             -webkit-appearance: none;
-            width: 200px;
+            width: 150px;  /* Ajustar o tamanho da linha */
             height: 10px;
             background: #555;
             border-radius: 5px;
             outline: none;
-            transition: background 0.3s ease-in-out;
+            position: relative;
+            margin: 0 10px; /* Adiciona um pequeno espaço nas extremidades */
         }
 
         input[type="range"]::-webkit-slider-runnable-track {
@@ -141,6 +142,10 @@
             width: 20px;
             background: #ff4747; /* Cor vermelha */
             border-radius: 50%;
+            position: absolute;
+            top: -5px; /* Centraliza a bolinha na linha */
+            left: 50%;
+            transform: translateX(-50%); /* Centraliza a bolinha horizontalmente */
             transition: background 0.3s ease-in-out;
         }
 
