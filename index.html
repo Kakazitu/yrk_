@@ -114,9 +114,13 @@
             // Atualiza a música no player
             const musicPlayer = document.getElementById("musicPlayer");
             const musicSource = document.getElementById("musicSource");
-            musicSource.src = musicas[randomIndex];  // Define o caminho da nova música
-            musicPlayer.load();  // Carrega a nova música
-            musicPlayer.play();  // Toca a nova música
+
+            // Atualiza o atributo src para a nova música e carrega a nova música
+            musicSource.src = musicas[randomIndex];  
+            musicPlayer.load();  // Carrega o novo arquivo de áudio
+
+            // Toca a nova música
+            musicPlayer.play();  
 
             // Atualiza o índice da última música tocada
             lastPlayed = randomIndex;
@@ -128,7 +132,9 @@
         }
 
         // Adiciona um evento para tocar uma nova música quando a atual termina
-        document.getElementById("musicPlayer").addEventListener("ended", tocarMusicaAleatoria);
+        document.getElementById("musicPlayer").addEventListener("ended", function() {
+            tocarMusicaAleatoria();
+        });
     </script>
 </body>
 </html>
