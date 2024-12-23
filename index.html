@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kakazitu</title>
+    <title>Portfólio - Kakazitu</title>
     <link rel="icon" href="sua-foto.png" type="image/png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap">
     <style>
@@ -15,41 +15,34 @@
         body, html {
             height: 100%;
             font-family: 'Fira Code', monospace;
+            background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
+            color: white;
             overflow: hidden;
-            background: black; /* Fundo preto */
             display: flex;
             justify-content: center;
             align-items: center;
         }
         .container {
             text-align: center;
-            color: white;
+            max-width: 600px;
         }
-        .header {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-        .header img {
-            width: 50px;
-            height: 50px;
+        .profile-img {
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
-            margin-right: 10px;
+            margin-bottom: 20px;
+            border: 3px solid white;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
         }
         .name {
-            font-size: 3em;
+            font-size: 2.5em;
             margin-bottom: 10px;
+            color: #ff4747;
         }
-        h1 {
-            font-size: 2em;
-            margin: 0 0 10px 0;
-            white-space: nowrap;
-            overflow: hidden;
-        }
-        p {
+        .subtitle {
             font-size: 1.2em;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+            color: #ccc;
         }
         .links {
             display: flex;
@@ -57,70 +50,76 @@
             gap: 20px;
             margin-bottom: 30px;
         }
-        .links img {
-            width: 50px;
-            height: 50px;
-            transition: transform 0.2s;
+        .links a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 60px;
+            height: 60px;
+            background: #292929;
+            border-radius: 50%;
+            transition: transform 0.3s, background 0.3s;
         }
-        .links img:hover {
-            transform: scale(1.1); /* Pequena animação ao passar o mouse */
+        .links a img {
+            width: 30px;
+            height: 30px;
+        }
+        .links a:hover {
+            transform: scale(1.2);
+            background: #ff4747;
         }
         .badges-panel {
             display: flex;
             justify-content: center;
-            align-items: center;
             gap: 15px;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 10px 15px;
-            border-radius: 10px;
+            margin-top: 20px;
         }
         .badge {
-            width: 40px;
-            height: 40px;
-            transition: transform 0.2s;
+            position: relative;
+            width: 50px;
+            height: 50px;
+            transition: transform 0.3s;
         }
         .badge img {
             width: 100%;
             height: 100%;
-            border-radius: 5px; /* Deixa os badges com bordas arredondadas */
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
         }
         .badge:hover {
-            transform: scale(1.2); /* Animação ao passar o mouse */
+            transform: scale(1.2);
         }
-        @keyframes rain {
-            0% { background-position: 0 0; }
-            100% { background-position: 0 100%; }
-        }
-        .rain {
+        .badge::after {
+            content: attr(data-title);
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(255,0,0,0.5), transparent);
-            animation: rain 0.5s linear infinite;
+            top: 110%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8em;
+            opacity: 0;
             pointer-events: none;
-            z-index: 0; /* A chuva deve estar atrás do conteúdo */
+            transition: opacity 0.3s, transform 0.3s;
+        }
+        .badge:hover::after {
+            opacity: 1;
+            transform: translateX(-50%) translateY(10px);
+        }
+        footer {
+            margin-top: 30px;
+            font-size: 0.9em;
+            color: #666;
         }
     </style>
 </head>
 <body>
-    <audio autoplay loop>
-        <source src="sua-musica.mp3" type="audio/mpeg">
-        Seu navegador não suporta o elemento audio.
-    </audio>
-
-    <div class="rain"></div>
-
     <div class="container">
-        <div class="header">
-            <img src="sua-foto.png" alt="Foto de Perfil">
-            <h1 id="header-text">DISCORD: yrk_777</h1>
-        </div>
-
+        <img src="sua-foto.png" alt="Foto de Perfil" class="profile-img">
         <div class="name">Kakazitu</div>
-        <h1 id="dynamic-text" class="typing">PROGRAMANDO...</h1>
-        <p>Desenvolvedor | Criador de Conteúdo</p>
+        <div class="subtitle">Desenvolvedor | Criador de Conteúdo</div>
 
         <div class="links">
             <a href="http://discordapp.com/users/749409557209677835" target="_blank">
@@ -132,44 +131,15 @@
         </div>
 
         <div class="badges-panel">
-            <div class="badge" title="Owner Badge">
+            <div class="badge" data-title="Owner Badge">
                 <img src="badge-owner.png" alt="Owner Badge">
             </div>
-            <div class="badge" title="Premium Badge">
+            <div class="badge" data-title="Premium Badge">
                 <img src="badge-premium.png" alt="Premium Badge">
             </div>
         </div>
+
+        <footer>&copy; 2024 Kakazitu | Todos os direitos reservados</footer>
     </div>
-
-    <script>
-        const textElement = document.getElementById('dynamic-text');
-        const headerTextElement = document.getElementById('header-text');
-        
-        const texts = ['PROGRAMANDO...', 'DEVELOPER...'];
-        let currentIndex = 0;
-
-        function updateText() {
-            textElement.textContent = texts[currentIndex];
-            currentIndex = (currentIndex + 1) % texts.length;
-            setTimeout(updateText, 5000);
-        }
-
-        updateText();
-
-        function updateHeaderText() {
-            const headerTitles = ["DISCORD: yrk_777", "ROBLOX: @JORGEOMORTO"];
-            let headerIndex = 0;
-
-            function animateHeader() {
-                headerTextElement.textContent = headerTitles[headerIndex];
-                headerIndex = (headerIndex + 1) % headerTitles.length;
-                setTimeout(animateHeader, 5000);
-            }
-
-            animateHeader();
-        }
-
-        updateHeaderText();
-    </script>
 </body>
 </html>
