@@ -62,6 +62,7 @@
             margin-bottom: 20px;
             border: 3px solid white;
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+            object-fit: cover;
         }
 
         .name {
@@ -228,7 +229,8 @@
                 videoElement.classList.add('profile-video');
                 videoElement.autoplay = true;
                 videoElement.muted = true;
-                profileImg.replaceWith(videoElement);
+                videoElement.loop = true; // Para garantir que o vídeo fica em loop, se necessário
+                profileImg.replaceWith(videoElement);  // Substitui a imagem pela tag de vídeo
             } else {
                 // Se não for a música 2, mantém a imagem de perfil
                 profileImg.src = "kakazitu.png";
