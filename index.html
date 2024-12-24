@@ -119,7 +119,6 @@
             color: #ccc;
         }
 
-        /* Estilo para a barra de volume */
         input[type="range"] {
             -webkit-appearance: none;
             width: 150px;
@@ -178,7 +177,6 @@
 
         <footer>&copy; 2024 Kakazitu | Todos os direitos reservados</footer>
 
-        <!-- Controle de volume -->
         <div class="volume-control">
             <label for="volumeSlider">Volume:</label>
             <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="1">
@@ -186,13 +184,13 @@
     </div>
 
     <audio id="musicPlayer" loop>
-        <source id="musicSource" src="musica1.mp3" type="audio/mp3">
+        <source id="musicSource" src="musica3.mp3" type="audio/mp3">
         Seu navegador não suporta o elemento de áudio.
     </audio>
 
     <script>
-        const musicas = ["musica1.mp3", "musica2.mp3", "musica3.mp3"];
-        let lastPlayed = -1;
+        const musicas = ["lost1.mp4", "lost2.mp4", "kakazitu.png"]; // Ajustado para vídeos e imagem padrão
+        let currentTrack = 0; // Começar com o primeiro item (lost1.mp4)
         const musicPlayer = document.getElementById("musicPlayer");
         const musicSource = document.getElementById("musicSource");
         const introScreen = document.getElementById("introScreen");
@@ -200,39 +198,29 @@
         const volumeSlider = document.getElementById("volumeSlider");
         const profileImg = document.getElementById("profileImg");
 
-        function tocarMusicaAleatoria() {
-            let randomIndex;
-            do {
-                randomIndex = Math.floor(Math.random() * musicas.length);
-            } while (randomIndex === lastPlayed);
+        function tocarMusica() {
+            const selectedTrack = musicas[currentTrack];
 
-            const selectedMusic = musicas[randomIndex];
-            musicSource.src = selectedMusic;
-            musicPlayer.load();
-            musicPlayer.play();
-
-            // Atualiza o perfil de acordo com a música selecionada
-            if (selectedMusic === "musica1.mp3") {
-                profileImg.src = "kakazitu.png";
-                profileImg.alt = "Foto de Perfil";
-            } else if (selectedMusic === "musica2.mp3") {
+            if (selectedTrack.endsWith(".mp4")) {
+                // Se for um vídeo
                 profileImg.outerHTML = `<video class="profile-img" autoplay loop muted id="profileImg">
-                                            <source src="lost2.mp4" type="video/mp4">
+                                            <source src="${selectedTrack}" type="video/mp4">
                                             Seu navegador não suporta o vídeo.
                                           </video>`;
-            } else if (selectedMusic === "musica3.mp3") {
-                profileImg.outerHTML = `<video class="profile-img" autoplay loop muted id="profileImg">
-                                            <source src="lost3.mp4" type="video/mp4">
-                                            Seu navegador não suporta o vídeo.
-                                          </video>`;
+            } else if (selectedTrack === "kakazitu.png") {
+                // Se for a imagem padrão
+                profileImg.outerHTML = `<img src="kakazitu.png" alt="Foto de Perfil" class="profile-img" id="profileImg">`;
             }
 
-            lastPlayed = randomIndex;
+            // Avançar para o próximo item na sequência (circular)
+            currentTrack = (currentTrack + 1) % musicas.length;
         }
 
-        // Ajusta o volume
         volumeSlider.addEventListener("input", function() {
-            musicPlayer.volume = volumeSlider.value;
+            if (musicPlayer.paused) {
+                // Ajuste de volume para a música, se a música estiver sendo reproduzida
+                musicPlayer.volume = volumeSlider.value;
+            }
         });
 
         introScreen.addEventListener("click", function() {
@@ -240,9 +228,14 @@
             setTimeout(function() {
                 introScreen.style.display = "none";
                 mainContent.style.opacity = 1;
-                tocarMusicaAleatoria();
+                tocarMusica();  // Tocar a música ao entrar
             }, 1000);
         });
+
+        // Garantir que a música seja tocada em sequência sempre que a página for carregada
+        window.onload = function() {
+            tocarMusica();  // Começa o vídeo/música ao carregar a página
+        };
     </script>
 </body>
 </html>
