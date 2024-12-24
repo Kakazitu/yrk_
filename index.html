@@ -5,33 +5,79 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>--Kakazitu--</title>
     <link rel="icon" href="kakazitu.png" type="image/png">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: 'Fira Code', monospace;
+            background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 600px;
+        }
+
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            border: 3px solid white;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+
+        .name {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #ff4747;
+        }
+
+        .description {
+            font-size: 1.2em;
+            color: #ccc;
+            margin-bottom: 30px;
+        }
+
+        .volume-control {
+            margin-top: 20px;
+            color: #ccc;
+        }
+
+        audio {
+            display: none;
+        }
+
+        video.profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+    </style>
 </head>
 <body>
-    <div class="intro-screen" id="introScreen">
-        <h1 id="tapText">Tap to Enter</h1>
-    </div>
-
-    <div class="container" id="mainContent">
+    <div class="container">
+        <!-- Foto ou vídeo de perfil -->
         <img src="kakazitu.png" alt="Foto de Perfil" class="profile-img" id="profileImage">
-        <video class="profile-img" id="profileVideo" loop muted style="display: none;">
-            <source src="lost1.mp4" type="video/mp4">
-            Seu navegador não suporta o elemento de vídeo.
-        </video>
+
         <div class="name">Kakazitu</div>
         <div class="description">Desenvolvedor | Criador de Conteúdo</div>
 
-        <div class="links">
-            <a href="http://discordapp.com/users/1136065248420438047" target="_blank">
-                <img src="discord-logo1.png" alt="Discord Logo">
-            </a>
-            <a href="https://www.roblox.com/pt/users/2798972541/profile" target="_blank">
-                <img src="roblox-logo1.png" alt="Roblox Logo">
-            </a>
-        </div>
-
-        <footer>&copy; 2024 Kakazitu | Todos os direitos reservados</footer>
-
+        <!-- Controle de volume -->
         <div class="volume-control">
             <label for="volumeSlider">Volume:</label>
             <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="1">
@@ -44,65 +90,44 @@
     </audio>
 
     <script>
-        const musicas = ["musica1.mp3", "musica2.mp3", "musica3.mp3"];
-        let lastPlayed = -1;
         const musicPlayer = document.getElementById("musicPlayer");
-        const introScreen = document.getElementById("introScreen");
-        const mainContent = document.getElementById("mainContent");
+        const profileImage = document.getElementById("profileImage");
         const volumeSlider = document.getElementById("volumeSlider");
 
-        const profileImage = document.getElementById("profileImage");
-        const profileVideo = document.getElementById("profileVideo");
-
-        // Troca de imagem para vídeo
+        // Troca a imagem pelo vídeo quando a música 'musica1.mp3' toca
         function verificarMusicaAtual() {
-            const musicaAtual = document.getElementById("musicSource").src;
-
-            if (musicaAtual.includes("musica1.mp3") && !musicPlayer.paused) {
-                profileImage.style.display = "none";
-                profileVideo.style.display = "block";
-                profileVideo.play();
+            if (musicPlayer.src.includes("musica1.mp3") && !musicPlayer.paused) {
+                profileImage.outerHTML = `
+                    <video class="profile-img" autoplay muted loop id="profileImage">
+                        <source src="lost1.mp4" type="video/mp4">
+                        Seu navegador não suporta o elemento de vídeo.
+                    </video>
+                `;
             } else {
-                profileVideo.pause();
-                profileVideo.style.display = "none";
-                profileImage.style.display = "block";
+                const videoElement = document.querySelector(".profile-img");
+                if (videoElement.tagName === "VIDEO") {
+                    videoElement.outerHTML = `
+                        <img src="kakazitu.png" alt="Foto de Perfil" class="profile-img" id="profileImage">
+                    `;
+                }
             }
         }
 
-        function tocarMusicaAleatoria() {
-            let randomIndex;
-            do {
-                randomIndex = Math.floor(Math.random() * musicas.length);
-            } while (randomIndex === lastPlayed);
-
-            const musicSource = document.getElementById("musicSource");
-            musicSource.src = musicas[randomIndex];  
-            musicPlayer.load();
-            musicPlayer.play();
-
-            lastPlayed = randomIndex;
-        }
-
-        // Ajusta o volume
-        volumeSlider.addEventListener("input", function() {
-            musicPlayer.volume = volumeSlider.value;
-        });
-
-        introScreen.addEventListener("click", function() {
-            introScreen.style.opacity = 0;
-
-            setTimeout(function() {
-                introScreen.style.display = "none";
-                mainContent.style.opacity = 1;
-                tocarMusicaAleatoria();
-            }, 1000);
-        });
-
-        // Eventos para alternar entre imagem e vídeo
+        // Eventos do player de música
         musicPlayer.addEventListener("play", verificarMusicaAtual);
         musicPlayer.addEventListener("pause", verificarMusicaAtual);
         musicPlayer.addEventListener("ended", verificarMusicaAtual);
         musicPlayer.addEventListener("loadeddata", verificarMusicaAtual);
+
+        // Controle de volume
+        volumeSlider.addEventListener("input", function () {
+            musicPlayer.volume = volumeSlider.value;
+        });
+
+        // Inicia a música ao carregar a página
+        window.onload = () => {
+            musicPlayer.play();
+        };
     </script>
 </body>
 </html>
