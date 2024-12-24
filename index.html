@@ -191,33 +191,24 @@
 
     <script>
         const musicas = ["musica1.mp3", "musica2.mp3", "musica3.mp3"];
-        let lastPlayed = -1;
+        let currentMusicIndex = 0;  // Rastreia o índice da música atual
         const musicPlayer = document.getElementById("musicPlayer");
         const introScreen = document.getElementById("introScreen");
         const mainContent = document.getElementById("mainContent");
         const tapText = document.getElementById("tapText");
         const volumeSlider = document.getElementById("volumeSlider");
-        let musicPlaying = false;  // Flag para verificar se a música já foi iniciada
 
-        function tocarMusicaAleatoria() {
-            if (musicPlaying) return;  // Impede que a música toque mais de uma vez
-
-            let randomIndex;
-            do {
-                randomIndex = Math.floor(Math.random() * musicas.length);
-            } while (randomIndex === lastPlayed);
-
+        function tocarMusicaSequencial() {
             const musicSource = document.getElementById("musicSource");
-            musicSource.src = musicas[randomIndex];  
+            musicSource.src = musicas[currentMusicIndex];  
             musicPlayer.load();
-            
+
             // Verifica se a música foi carregada corretamente
             musicPlayer.oncanplaythrough = () => {
                 musicPlayer.play();
-                musicPlaying = true;  // Marca que a música foi iniciada
             };
-            
-            lastPlayed = randomIndex;
+
+            currentMusicIndex = (currentMusicIndex + 1) % musicas.length;  // Atualiza o índice para a próxima música (volta para a primeira ao atingir o final)
         }
 
         // Ajusta o volume
@@ -231,7 +222,7 @@
             setTimeout(function() {
                 introScreen.style.display = "none";
                 mainContent.style.opacity = 1;
-                tocarMusicaAleatoria();
+                tocarMusicaSequencial();
             }, 1000);
         });
     </script>
