@@ -55,7 +55,8 @@
             transition: opacity 1s ease-in-out;
         }
 
-        .profile-img {
+        .profile-img,
+        .profile-video {
             width: 120px;
             height: 120px;
             border-radius: 50%;
@@ -118,33 +119,23 @@
             color: #ccc;
         }
 
-        /* Estilo para a barra de volume */
         input[type="range"] {
             -webkit-appearance: none;
-            width: 150px;  /* Ajuste o tamanho da linha */
+            width: 150px;
             height: 10px;
             background: #555;
             border-radius: 5px;
             outline: none;
-            position: relative;
-            margin: 0 10px; /* Adiciona um pequeno espaço nas extremidades */
-        }
-
-        input[type="range"]::-webkit-slider-runnable-track {
-            height: 10px;
-            background: #555;
-            border-radius: 5px;
+            margin: 0 10px;
         }
 
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             height: 20px;
             width: 20px;
-            background: #ff4747; /* Cor vermelha */
+            background: #ff4747;
             border-radius: 50%;
-            position: relative; /* Não deve ser absolute */
-            transition: background 0.3s ease-in-out;
-            margin-top: -6px; /* Ajuste para centralizar mais para cima a bolinha */
+            margin-top: -6px;
         }
 
         input[type="range"]:active::-webkit-slider-thumb {
@@ -154,15 +145,6 @@
         audio {
             display: none;
         }
-
-        video {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            margin-bottom: 20px;
-            border: 3px solid white;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-        }
     </style>
 </head>
 <body>
@@ -171,7 +153,7 @@
     </div>
 
     <div class="container" id="mainContent">
-        <img src="kakazitu.png" alt="Foto de Perfil" class="profile-img" id="profileImg">
+        <img src="kakazitu.png" alt="Foto de Perfil" class="profile-img" id="profileMedia">
         <div class="name">Kakazitu</div>
         <div class="description">Desenvolvedor | Criador de Conteúdo</div>
 
@@ -186,7 +168,6 @@
 
         <footer>&copy; 2024 Kakazitu | Todos os direitos reservados</footer>
 
-        <!-- Controle de volume -->
         <div class="volume-control">
             <label for="volumeSlider">Volume:</label>
             <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="1">
@@ -204,7 +185,7 @@
         const musicPlayer = document.getElementById("musicPlayer");
         const introScreen = document.getElementById("introScreen");
         const mainContent = document.getElementById("mainContent");
-        const profileImg = document.getElementById("profileImg");
+        const profileMedia = document.getElementById("profileMedia");
         const volumeSlider = document.getElementById("volumeSlider");
 
         function tocarMusicaAleatoria() {
@@ -219,19 +200,19 @@
             musicPlayer.play();
 
             if (musicas[randomIndex] === "musica1.mp3") {
-                profileImg.outerHTML = `
-                    <video class="profile-img" autoplay loop muted>
+                profileMedia.outerHTML = `
+                    <video class="profile-video" autoplay loop muted id="profileMedia">
                         <source src="lost1.mp4" type="video/mp4">
                         Seu navegador não suporta o vídeo.
                     </video>`;
             } else {
-                profileImg.outerHTML = `<img src="kakazitu.png" alt="Foto de Perfil" class="profile-img" id="profileImg">`;
+                profileMedia.outerHTML = `
+                    <img src="kakazitu.png" alt="Foto de Perfil" class="profile-img" id="profileMedia">`;
             }
 
             lastPlayed = randomIndex;
         }
 
-        // Ajusta o volume
         volumeSlider.addEventListener("input", function() {
             musicPlayer.volume = volumeSlider.value;
         });
