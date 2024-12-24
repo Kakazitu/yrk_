@@ -154,6 +154,16 @@
         audio {
             display: none;
         }
+
+        video.profile-video {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;  /* Faz com que o vídeo se ajuste bem à bolinha */
+            border: 3px solid white;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+            display: none;  /* Inicialmente oculto */
+        }
     </style>
 </head>
 <body>
@@ -162,7 +172,11 @@
     </div>
 
     <div class="container" id="mainContent">
-        <img src="kakazitu.png" alt="Foto de Perfil" class="profile-img">
+        <video id="profileVideo" class="profile-video" loop>
+            <source src="lost2.mp4" type="video/mp4">
+            Seu navegador não suporta o vídeo.
+        </video>
+        <img src="kakazitu.png" alt="Foto de Perfil" class="profile-img" id="profileImg">
         <div class="name">Kakazitu</div>
         <div class="description">Desenvolvedor | Criador de Conteúdo</div>
 
@@ -197,6 +211,8 @@
         const mainContent = document.getElementById("mainContent");
         const tapText = document.getElementById("tapText");
         const volumeSlider = document.getElementById("volumeSlider");
+        const profileImg = document.getElementById("profileImg");
+        const profileVideo = document.getElementById("profileVideo");
 
         function tocarMusicaAleatoria() {
             let randomIndex;
@@ -210,6 +226,15 @@
             musicPlayer.play();
 
             lastPlayed = randomIndex;
+
+            // Verifica se a musica2.mp3 está tocando
+            if (musicas[randomIndex] === "musica2.mp3") {
+                profileImg.style.display = "none";  // Oculta a imagem
+                profileVideo.style.display = "block";  // Exibe o vídeo
+            } else {
+                profileImg.style.display = "block";  // Exibe a imagem
+                profileVideo.style.display = "none";  // Oculta o vídeo
+            }
         }
 
         // Ajusta o volume
