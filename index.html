@@ -154,6 +154,13 @@
         audio {
             display: none;
         }
+
+        video {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
     </style>
 </head>
 <body>
@@ -189,8 +196,8 @@
     </audio>
 
     <script>
-        const musicas = ["lost1.mp4", "lost2.mp4", "kakazitu.png"]; // Ajustado para vídeos e imagem padrão
-        let currentTrack = 0; // Começar com o primeiro item (lost1.mp4)
+        const musicas = ["musica1.mp3", "musica2.mp3", "lost1.mp4", "lost2.mp4"]; // Sequência de música e vídeos
+        let currentTrack = 0; // Começar com o primeiro item (musica1.mp3)
         const musicPlayer = document.getElementById("musicPlayer");
         const musicSource = document.getElementById("musicSource");
         const introScreen = document.getElementById("introScreen");
@@ -198,43 +205,49 @@
         const volumeSlider = document.getElementById("volumeSlider");
         const profileImg = document.getElementById("profileImg");
 
-        function tocarMusica() {
+        // Função para alternar entre música e vídeo
+        function tocarMusicaOuVideo() {
             const selectedTrack = musicas[currentTrack];
 
-            if (selectedTrack.endsWith(".mp4")) {
-                // Se for um vídeo
+            if (selectedTrack.endsWith(".mp3")) {
+                // Se for música (MP3)
+                musicSource.src = selectedTrack;
+                musicPlayer.load(); // Carrega a nova música
+                musicPlayer.play(); // Toca a música
+                profileImg.outerHTML = `<img src="kakazitu.png" alt="Foto de Perfil" class="profile-img" id="profileImg">`;
+                musicPlayer.volume = volumeSlider.value; // Ajuste de volume para a música
+            } else if (selectedTrack.endsWith(".mp4")) {
+                // Se for vídeo (mudo)
                 profileImg.outerHTML = `<video class="profile-img" autoplay loop muted id="profileImg">
                                             <source src="${selectedTrack}" type="video/mp4">
                                             Seu navegador não suporta o vídeo.
                                           </video>`;
-            } else if (selectedTrack === "kakazitu.png") {
-                // Se for a imagem padrão
-                profileImg.outerHTML = `<img src="kakazitu.png" alt="Foto de Perfil" class="profile-img" id="profileImg">`;
             }
 
             // Avançar para o próximo item na sequência (circular)
             currentTrack = (currentTrack + 1) % musicas.length;
         }
 
+        // Ajuste do volume
         volumeSlider.addEventListener("input", function() {
-            if (musicPlayer.paused) {
-                // Ajuste de volume para a música, se a música estiver sendo reproduzida
+            if (!musicPlayer.paused) {
                 musicPlayer.volume = volumeSlider.value;
             }
         });
 
+        // Função chamada ao clicar na tela de introdução
         introScreen.addEventListener("click", function() {
             introScreen.style.opacity = 0;
             setTimeout(function() {
                 introScreen.style.display = "none";
                 mainContent.style.opacity = 1;
-                tocarMusica();  // Tocar a música ao entrar
+                tocarMusicaOuVideo();  // Tocar o conteúdo ao entrar
             }, 1000);
         });
 
-        // Garantir que a música seja tocada em sequência sempre que a página for carregada
+        // Garantir que a música ou vídeo seja tocado ao carregar a página
         window.onload = function() {
-            tocarMusica();  // Começa o vídeo/música ao carregar a página
+            tocarMusicaOuVideo();  // Começa o conteúdo ao carregar a página
         };
     </script>
 </body>
