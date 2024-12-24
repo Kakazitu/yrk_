@@ -154,6 +154,17 @@
         audio {
             display: none;
         }
+
+        /* Estilos para o vídeo */
+        .profile-video {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            border: 3px solid white;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+            object-fit: cover; /* Faz com que o vídeo se encaixe na bolinha */
+        }
     </style>
 </head>
 <body>
@@ -162,7 +173,7 @@
     </div>
 
     <div class="container" id="mainContent">
-        <img src="kakazitu.png" alt="Foto de Perfil" class="profile-img">
+        <img src="kakazitu.png" alt="Foto de Perfil" class="profile-img" id="profileImg">
         <div class="name">Kakazitu</div>
         <div class="description">Desenvolvedor | Criador de Conteúdo</div>
 
@@ -191,18 +202,40 @@
 
     <script>
         const musicas = ["musica1.mp3", "musica2.mp3", "musica3.mp3"];
+        let lastPlayed = -1;
         const musicPlayer = document.getElementById("musicPlayer");
         const introScreen = document.getElementById("introScreen");
         const mainContent = document.getElementById("mainContent");
+        const tapText = document.getElementById("tapText");
         const volumeSlider = document.getElementById("volumeSlider");
+        const profileImg = document.getElementById("profileImg");
 
-        // Função para tocar uma música aleatória
         function tocarMusicaAleatoria() {
-            const randomIndex = Math.floor(Math.random() * musicas.length);
+            let randomIndex;
+            do {
+                randomIndex = Math.floor(Math.random() * musicas.length);
+            } while (randomIndex === lastPlayed);
+
             const musicSource = document.getElementById("musicSource");
             musicSource.src = musicas[randomIndex];  
-            musicPlayer.load();  // Carrega a nova música
-            musicPlayer.play();  // Toca a nova música
+            musicPlayer.load();
+            musicPlayer.play();
+
+            if (randomIndex === 1) {
+                // Se a música 2 (index 1) for escolhida, substitui a imagem pela tag de vídeo
+                const videoElement = document.createElement('video');
+                videoElement.src = "lost2.mp4"; // Substitua pelo caminho do seu vídeo
+                videoElement.classList.add('profile-video');
+                videoElement.autoplay = true;
+                videoElement.muted = true;
+                profileImg.replaceWith(videoElement);
+            } else {
+                // Se não for a música 2, mantém a imagem de perfil
+                profileImg.src = "kakazitu.png";
+                profileImg.style.display = "block";
+            }
+
+            lastPlayed = randomIndex;
         }
 
         // Ajusta o volume
@@ -216,7 +249,7 @@
             setTimeout(function() {
                 introScreen.style.display = "none";
                 mainContent.style.opacity = 1;
-                tocarMusicaAleatoria(); // Chama para tocar uma música aleatória
+                tocarMusicaAleatoria();
             }, 1000);
         });
     </script>
