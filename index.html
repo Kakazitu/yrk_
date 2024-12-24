@@ -162,7 +162,7 @@
     </div>
 
     <div class="container" id="mainContent">
-        <img src="kakazitu.png" alt="Foto de Perfil" class="profile-img">
+        <img src="kakazitu.png" alt="Foto de Perfil" class="profile-img" id="profileImg">
         <div class="name">Kakazitu</div>
         <div class="description">Desenvolvedor | Criador de Conteúdo</div>
 
@@ -195,6 +195,7 @@
         const introScreen = document.getElementById("introScreen");
         const mainContent = document.getElementById("mainContent");
         const volumeSlider = document.getElementById("volumeSlider");
+        const profileImg = document.getElementById("profileImg");
 
         // Função para tocar uma música aleatória
         function tocarMusicaAleatoria() {
@@ -203,6 +204,25 @@
             musicSource.src = musicas[randomIndex];  
             musicPlayer.load();  // Carrega a nova música
             musicPlayer.play();  // Toca a nova música
+
+            // Se a música 2 for escolhida, muda a imagem do perfil para o vídeo
+            if (randomIndex === 1) {
+                const videoElement = document.createElement('video');
+                videoElement.src = "lost2.mp4";  // Substitua com o caminho do seu vídeo
+                videoElement.classList.add('profile-img');
+                videoElement.autoplay = true;
+                videoElement.muted = true;
+                videoElement.loop = true;
+                profileImg.replaceWith(videoElement);  // Substitui a imagem pela tag de vídeo
+            } else {
+                // Se a música não for a 2, garante que a imagem do perfil não seja alterada
+                if (profileImg.tagName === 'VIDEO') {
+                    const newImage = document.createElement('img');
+                    newImage.src = "kakazitu.png";
+                    newImage.classList.add('profile-img');
+                    videoElement.replaceWith(newImage);
+                }
+            }
         }
 
         // Ajusta o volume
