@@ -62,6 +62,15 @@
             margin-bottom: 20px;
             border: 3px solid white;
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+
+        .profile-video {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            border: 3px solid white;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
             object-fit: cover;
         }
 
@@ -119,15 +128,16 @@
             color: #ccc;
         }
 
+        /* Estilo para a barra de volume */
         input[type="range"] {
             -webkit-appearance: none;
-            width: 150px;
+            width: 150px;  /* Ajuste o tamanho da linha */
             height: 10px;
             background: #555;
             border-radius: 5px;
             outline: none;
             position: relative;
-            margin: 0 10px;
+            margin: 0 10px; /* Adiciona um pequeno espaço nas extremidades */
         }
 
         input[type="range"]::-webkit-slider-runnable-track {
@@ -140,11 +150,11 @@
             -webkit-appearance: none;
             height: 20px;
             width: 20px;
-            background: #ff4747;
+            background: #ff4747; /* Cor vermelha */
             border-radius: 50%;
-            position: relative;
+            position: relative; /* Não deve ser absolute */
             transition: background 0.3s ease-in-out;
-            margin-top: -6px;
+            margin-top: -6px; /* Ajuste para centralizar mais para cima a bolinha */
         }
 
         input[type="range"]:active::-webkit-slider-thumb {
@@ -154,13 +164,6 @@
         audio {
             display: none;
         }
-
-        video {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
     </style>
 </head>
 <body>
@@ -169,7 +172,9 @@
     </div>
 
     <div class="container" id="mainContent">
-        <img src="kakazitu.png" alt="Foto de Perfil" class="profile-img" id="profileImg">
+        <div id="profileContainer">
+            <img src="kakazitu.png" alt="Foto de Perfil" class="profile-img" id="profileImage">
+        </div>
         <div class="name">Kakazitu</div>
         <div class="description">Desenvolvedor | Criador de Conteúdo</div>
 
@@ -184,6 +189,7 @@
 
         <footer>&copy; 2024 Kakazitu | Todos os direitos reservados</footer>
 
+        <!-- Controle de volume -->
         <div class="volume-control">
             <label for="volumeSlider">Volume:</label>
             <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="1">
@@ -191,64 +197,72 @@
     </div>
 
     <audio id="musicPlayer" loop>
-        <source id="musicSource" src="musica3.mp3" type="audio/mp3">
+        <source id="musicSource" src="musica1.mp3" type="audio/mp3">
         Seu navegador não suporta o elemento de áudio.
     </audio>
 
     <script>
-        const musicas = ["musica1.mp3", "musica2.mp3", "lost1.mp4", "lost2.mp4"]; // Sequência de música e vídeos
-        let currentTrack = 0; // Começar com o primeiro item (musica1.mp3)
+        const musicas = ["musica1.mp3", "musica2.mp3", "musica3.mp3"];
+        let lastPlayed = -1;
         const musicPlayer = document.getElementById("musicPlayer");
-        const musicSource = document.getElementById("musicSource");
         const introScreen = document.getElementById("introScreen");
         const mainContent = document.getElementById("mainContent");
+        const tapText = document.getElementById("tapText");
         const volumeSlider = document.getElementById("volumeSlider");
-        const profileImg = document.getElementById("profileImg");
+        const profileContainer = document.getElementById("profileContainer");
+        const profileImage = document.getElementById("profileImage");
 
-        // Função para alternar entre música e vídeo
-        function tocarMusicaOuVideo() {
-            const selectedTrack = musicas[currentTrack];
+        function tocarMusicaAleatoria() {
+            let randomIndex;
+            do {
+                randomIndex = Math.floor(Math.random() * musicas.length);
+            } while (randomIndex === lastPlayed);
 
-            if (selectedTrack.endsWith(".mp3")) {
-                // Se for música (MP3)
-                musicSource.src = selectedTrack;
-                musicPlayer.load(); // Carrega a nova música
-                musicPlayer.play(); // Toca a música
-                profileImg.outerHTML = `<img src="kakazitu.png" alt="Foto de Perfil" class="profile-img" id="profileImg">`;
-                musicPlayer.volume = volumeSlider.value; // Ajuste de volume para a música
-            } else if (selectedTrack.endsWith(".mp4")) {
-                // Se for vídeo (mudo)
-                profileImg.outerHTML = `<video class="profile-img" autoplay loop muted id="profileImg">
-                                            <source src="${selectedTrack}" type="video/mp4">
-                                            Seu navegador não suporta o vídeo.
-                                          </video>`;
+            const musicSource = document.getElementById("musicSource");
+            musicSource.src = musicas[randomIndex];  
+            musicPlayer.load();
+            musicPlayer.play();
+
+            lastPlayed = randomIndex;
+
+            // Modificar a imagem de perfil dependendo da música
+            if (randomIndex === 0) {
+                profileImage.style.display = "none"; // Esconde a imagem
+                const video = document.createElement("video");
+                video.src = "lost1.mp4";
+                video.autoplay = true;
+                video.loop = true;
+                video.classList.add("profile-video");
+                profileContainer.appendChild(video);
+            } else if (randomIndex === 1) {
+                profileImage.style.display = "none"; // Esconde a imagem
+                const video = document.createElement("video");
+                video.src = "lost2.mp4";
+                video.autoplay = true;
+                video.loop = true;
+                video.classList.add("profile-video");
+                profileContainer.appendChild(video);
+            } else {
+                profileImage.style.display = "block"; // Exibe a imagem novamente
+                const videos = profileContainer.querySelectorAll("video");
+                videos.forEach(video => video.remove()); // Remove qualquer vídeo anterior
             }
-
-            // Avançar para o próximo item na sequência (circular)
-            currentTrack = (currentTrack + 1) % musicas.length;
         }
 
-        // Ajuste do volume
+        // Ajusta o volume
         volumeSlider.addEventListener("input", function() {
-            if (!musicPlayer.paused) {
-                musicPlayer.volume = volumeSlider.value;
-            }
+            musicPlayer.volume = volumeSlider.value;
         });
 
-        // Função chamada ao clicar na tela de introdução
         introScreen.addEventListener("click", function() {
             introScreen.style.opacity = 0;
+
             setTimeout(function() {
                 introScreen.style.display = "none";
                 mainContent.style.opacity = 1;
-                tocarMusicaOuVideo();  // Tocar o conteúdo ao entrar
+                tocarMusicaAleatoria();
             }, 1000);
         });
-
-        // Garantir que a música ou vídeo seja tocado ao carregar a página
-        window.onload = function() {
-            tocarMusicaOuVideo();  // Começa o conteúdo ao carregar a página
-        };
     </script>
 </body>
 </html>
