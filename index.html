@@ -62,6 +62,7 @@
             margin-bottom: 20px;
             border: 3px solid white;
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+            object-fit: cover;  /* Garantir que a imagem/vídeo fique no formato da bolinha */
         }
 
         .name {
@@ -191,12 +192,6 @@
 
     <script>
         const musicas = ["musica1.mp3", "musica2.mp3", "musica3.mp3"];
-        const videos = {
-            "musica1.mp3": "lost1.mp4",
-            "musica2.mp3": "lost2.mp4",
-            "musica3.mp3": "lost3.mp4"
-        };
-
         let lastPlayed = -1;
         const musicPlayer = document.getElementById("musicPlayer");
         const musicSource = document.getElementById("musicSource");
@@ -216,14 +211,20 @@
             musicPlayer.load();
             musicPlayer.play();
 
-            if (videos[selectedMusic]) {
+            if (selectedMusic === "musica1.mp3") {
+                profileImg.outerHTML = `<img src="kakazitu.png" alt="Foto de Perfil" class="profile-img" id="profileImg">`;
+            } else if (selectedMusic === "musica2.mp3") {
                 profileImg.outerHTML = `
                     <video class="profile-img" autoplay loop muted id="profileImg">
-                        <source src="${videos[selectedMusic]}" type="video/mp4">
+                        <source src="lost2.mp4" type="video/mp4">
                         Seu navegador não suporta o vídeo.
                     </video>`;
-            } else {
-                profileImg.outerHTML = `<img src="kakazitu.png" alt="Foto de Perfil" class="profile-img" id="profileImg">`;
+            } else if (selectedMusic === "musica3.mp3") {
+                profileImg.outerHTML = `
+                    <video class="profile-img" autoplay loop muted id="profileImg">
+                        <source src="lost3.mp4" type="video/mp4">
+                        Seu navegador não suporta o vídeo.
+                    </video>`;
             }
 
             lastPlayed = randomIndex;
