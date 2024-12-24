@@ -207,8 +207,12 @@
             const musicSource = document.getElementById("musicSource");
             musicSource.src = musicas[randomIndex];  
             musicPlayer.load();
-            musicPlayer.play();
-
+            
+            // Verifica se a música foi carregada corretamente
+            musicPlayer.oncanplaythrough = () => {
+                musicPlayer.play();
+            };
+            
             lastPlayed = randomIndex;
         }
 
