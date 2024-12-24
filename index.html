@@ -222,8 +222,13 @@
             setTimeout(function() {
                 introScreen.style.display = "none";
                 mainContent.style.opacity = 1;
-                tocarMusicaSequencial();
+                tocarMusicaSequencial(); // Chama para tocar a música quando a tela desaparecer
             }, 1000);
+        });
+
+        // Ao terminar a música, troca para a próxima
+        musicPlayer.addEventListener('ended', function() {
+            tocarMusicaSequencial();
         });
     </script>
 </body>
