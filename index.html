@@ -216,6 +216,13 @@
             videoElement.muted = true;
             videoElement.loop = true;
             profileImg.replaceWith(videoElement);  // Substitui a imagem pela tag de vídeo
+
+            // Loop contínuo para manter o vídeo reproduzindo
+            setInterval(() => {
+                if (videoElement.paused) {
+                    videoElement.play(); // Força o vídeo a continuar tocando
+                }
+            }, 500); // Verifica a cada 500ms
         } else {
             // Se a música não for a 2, garante que a imagem do perfil não seja alterada
             if (profileImg.tagName === 'VIDEO') {
@@ -230,17 +237,6 @@
     // Ajusta o volume
     volumeSlider.addEventListener("input", function() {
         musicPlayer.volume = volumeSlider.value;
-    });
-
-    // Garante que o vídeo continue tocando mesmo quando a aba está inativa
-    document.addEventListener("visibilitychange", function() {
-        if (videoElement && videoElement.tagName === "VIDEO") {
-            if (document.visibilityState === "visible") {
-                videoElement.play(); // Retoma o vídeo ao voltar para a aba
-            } else {
-                videoElement.play(); // Força o vídeo a continuar tocando mesmo quando inativo
-            }
-        }
     });
 
     introScreen.addEventListener("click", function() {
