@@ -154,15 +154,6 @@
         audio {
             display: none;
         }
-
-        video {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid white;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-        }
     </style>
 </head>
 <body>
@@ -198,11 +189,6 @@
         Seu navegador não suporta o elemento de áudio.
     </audio>
 
-    <video id="profileVideo" class="profile-img" preload="auto">
-        <source src="lost2.mp4" type="video/mp4">
-        Seu navegador não suporta o elemento de vídeo.
-    </video>
-
     <script>
         const musicas = ["musica1.mp3", "musica2.mp3", "musica3.mp3"];
         const musicPlayer = document.getElementById("musicPlayer");
@@ -210,7 +196,6 @@
         const mainContent = document.getElementById("mainContent");
         const volumeSlider = document.getElementById("volumeSlider");
         const profileImg = document.getElementById("profileImg");
-        const profileVideo = document.getElementById("profileVideo");
 
         // Função para tocar uma música aleatória
         function tocarMusicaAleatoria() {
@@ -218,18 +203,25 @@
             const musicSource = document.getElementById("musicSource");
             musicSource.src = musicas[randomIndex];  
             musicPlayer.load();  // Carrega a nova música
+            musicPlayer.play();  // Toca a nova música
 
-            // Se a música escolhida for a música2.mp3, começa o vídeo antes de tocar a música
-            if (musicas[randomIndex] === "musica2.mp3") {
-                profileVideo.style.display = "block";
-                profileImg.style.display = "none";  // Esconde a imagem de perfil
-                setTimeout(function() {
-                    musicPlayer.play();  // Começa a música após 1 segundo
-                }, 1000);
+            // Se a música 2 for escolhida, muda a imagem do perfil para o vídeo
+            if (randomIndex === 1) {
+                const videoElement = document.createElement('video');
+                videoElement.src = "lost2.mp4";  // Substitua com o caminho do seu vídeo
+                videoElement.classList.add('profile-img');
+                videoElement.autoplay = true;
+                videoElement.muted = true;
+                videoElement.loop = true;
+                profileImg.replaceWith(videoElement);  // Substitui a imagem pela tag de vídeo
             } else {
-                profileVideo.style.display = "none";
-                profileImg.style.display = "block";  // Exibe a imagem novamente
-                musicPlayer.play();  // Toca a música normalmente
+                // Se a música não for a 2, garante que a imagem do perfil não seja alterada
+                if (profileImg.tagName === 'VIDEO') {
+                    const newImage = document.createElement('img');
+                    newImage.src = "kakazitu.png";
+                    newImage.classList.add('profile-img');
+                    videoElement.replaceWith(newImage);
+                }
             }
         }
 
