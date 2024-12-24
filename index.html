@@ -55,15 +55,13 @@
             transition: opacity 1s ease-in-out;
         }
 
-        .profile-img,
-        .profile-video {
+        .profile-img {
             width: 120px;
             height: 120px;
             border-radius: 50%;
             margin-bottom: 20px;
             border: 3px solid white;
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-            object-fit: cover;
         }
 
         .name {
@@ -120,23 +118,33 @@
             color: #ccc;
         }
 
+        /* Estilo para a barra de volume */
         input[type="range"] {
             -webkit-appearance: none;
-            width: 150px;
+            width: 150px;  /* Ajuste o tamanho da linha */
             height: 10px;
             background: #555;
             border-radius: 5px;
             outline: none;
-            margin: 0 10px;
+            position: relative;
+            margin: 0 10px; /* Adiciona um pequeno espaço nas extremidades */
+        }
+
+        input[type="range"]::-webkit-slider-runnable-track {
+            height: 10px;
+            background: #555;
+            border-radius: 5px;
         }
 
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             height: 20px;
             width: 20px;
-            background: #ff4747;
+            background: #ff4747; /* Cor vermelha */
             border-radius: 50%;
-            margin-top: -6px;
+            position: relative; /* Não deve ser absolute */
+            transition: background 0.3s ease-in-out;
+            margin-top: -6px; /* Ajuste para centralizar mais para cima a bolinha */
         }
 
         input[type="range"]:active::-webkit-slider-thumb {
@@ -154,7 +162,7 @@
     </div>
 
     <div class="container" id="mainContent">
-        <img src="kakazitu.png" alt="Foto de Perfil" class="profile-img" id="profileMedia">
+        <img src="kakazitu.png" alt="Foto de Perfil" class="profile-img" id="profileImg">
         <div class="name">Kakazitu</div>
         <div class="description">Desenvolvedor | Criador de Conteúdo</div>
 
@@ -169,6 +177,7 @@
 
         <footer>&copy; 2024 Kakazitu | Todos os direitos reservados</footer>
 
+        <!-- Controle de volume -->
         <div class="volume-control">
             <label for="volumeSlider">Volume:</label>
             <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="1">
@@ -187,47 +196,44 @@
             "musica2.mp3": "lost2.mp4",
             "musica3.mp3": "lost3.mp4"
         };
+
         let lastPlayed = -1;
         const musicPlayer = document.getElementById("musicPlayer");
+        const musicSource = document.getElementById("musicSource");
         const introScreen = document.getElementById("introScreen");
         const mainContent = document.getElementById("mainContent");
-        const profileMedia = document.getElementById("profileMedia");
         const volumeSlider = document.getElementById("volumeSlider");
+        const profileImg = document.getElementById("profileImg");
 
-        // Função para tocar uma música aleatória
         function tocarMusicaAleatoria() {
             let randomIndex;
-            let musicSelected;
             do {
                 randomIndex = Math.floor(Math.random() * musicas.length);
-                musicSelected = musicas[randomIndex];
-            } while (musicSelected === musicPlayer.src.split("/").pop()); // Impede a repetição imediata
+            } while (randomIndex === lastPlayed);
 
-            const musicSource = document.getElementById("musicSource");
-            musicSource.src = musicSelected;
+            const selectedMusic = musicas[randomIndex];
+            musicSource.src = selectedMusic;
             musicPlayer.load();
-            musicPlayer.play().catch(error => {
-                console.error("Erro ao tentar reproduzir o áudio:", error);
-            });
+            musicPlayer.play();
 
-            if (videos[musicSelected]) {
-                profileMedia.outerHTML = `
-                    <video class="profile-video" autoplay loop muted id="profileMedia">
-                        <source src="${videos[musicSelected]}" type="video/mp4">
+            if (videos[selectedMusic]) {
+                profileImg.outerHTML = `
+                    <video class="profile-img" autoplay loop muted id="profileImg">
+                        <source src="${videos[selectedMusic]}" type="video/mp4">
                         Seu navegador não suporta o vídeo.
                     </video>`;
             } else {
-                profileMedia.outerHTML = `
-                    <img src="kakazitu.png" alt="Foto de Perfil" class="profile-img" id="profileMedia">`;
+                profileImg.outerHTML = `<img src="kakazitu.png" alt="Foto de Perfil" class="profile-img" id="profileImg">`;
             }
+
+            lastPlayed = randomIndex;
         }
 
-        // Ajuste de volume
+        // Ajusta o volume
         volumeSlider.addEventListener("input", function() {
             musicPlayer.volume = volumeSlider.value;
         });
 
-        // Iniciar música ao clicar
         introScreen.addEventListener("click", function() {
             introScreen.style.opacity = 0;
             setTimeout(function() {
