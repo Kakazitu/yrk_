@@ -203,7 +203,9 @@
             const musicSource = document.getElementById("musicSource");
             musicSource.src = selectedMusic;
             musicPlayer.load();
-            musicPlayer.play();
+            musicPlayer.play().catch(error => {
+                console.error("Erro ao tentar reproduzir o áudio:", error);
+            });
 
             if (videos[selectedMusic]) {
                 profileMedia.outerHTML = `
