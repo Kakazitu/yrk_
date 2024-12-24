@@ -191,24 +191,18 @@
 
     <script>
         const musicas = ["musica1.mp3", "musica2.mp3", "musica3.mp3"];
-        let currentMusicIndex = 0;  // Rastreia o índice da música atual
         const musicPlayer = document.getElementById("musicPlayer");
         const introScreen = document.getElementById("introScreen");
         const mainContent = document.getElementById("mainContent");
-        const tapText = document.getElementById("tapText");
         const volumeSlider = document.getElementById("volumeSlider");
 
-        function tocarMusicaSequencial() {
+        // Função para tocar uma música aleatória
+        function tocarMusicaAleatoria() {
+            const randomIndex = Math.floor(Math.random() * musicas.length);
             const musicSource = document.getElementById("musicSource");
-            musicSource.src = musicas[currentMusicIndex];  
-            musicPlayer.load();
-
-            // Verifica se a música foi carregada corretamente
-            musicPlayer.oncanplaythrough = () => {
-                musicPlayer.play();
-            };
-
-            currentMusicIndex = (currentMusicIndex + 1) % musicas.length;  // Atualiza o índice para a próxima música (volta para a primeira ao atingir o final)
+            musicSource.src = musicas[randomIndex];  
+            musicPlayer.load();  // Carrega a nova música
+            musicPlayer.play();  // Toca a nova música
         }
 
         // Ajusta o volume
@@ -222,13 +216,8 @@
             setTimeout(function() {
                 introScreen.style.display = "none";
                 mainContent.style.opacity = 1;
-                tocarMusicaSequencial(); // Chama para tocar a música quando a tela desaparecer
+                tocarMusicaAleatoria(); // Chama para tocar uma música aleatória
             }, 1000);
-        });
-
-        // Ao terminar a música, troca para a próxima
-        musicPlayer.addEventListener('ended', function() {
-            tocarMusicaSequencial();
         });
     </script>
 </body>
