@@ -235,8 +235,10 @@
     // Garante que o vídeo continue tocando mesmo quando a aba está inativa
     document.addEventListener("visibilitychange", function() {
         if (videoElement && videoElement.tagName === "VIDEO") {
-            if (document.visibilityState === "hidden") {
-                videoElement.play(); // Força o vídeo a continuar tocando
+            if (document.visibilityState === "visible") {
+                videoElement.play(); // Retoma o vídeo ao voltar para a aba
+            } else {
+                videoElement.play(); // Força o vídeo a continuar tocando mesmo quando inativo
             }
         }
     });
