@@ -62,7 +62,7 @@
             margin-bottom: 20px;
             border: 3px solid white;
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-            object-fit: cover;  /* Garantir que a imagem/vídeo fique no formato da bolinha */
+            object-fit: cover;
         }
 
         .name {
@@ -122,13 +122,13 @@
         /* Estilo para a barra de volume */
         input[type="range"] {
             -webkit-appearance: none;
-            width: 150px;  /* Ajuste o tamanho da linha */
+            width: 150px;
             height: 10px;
             background: #555;
             border-radius: 5px;
             outline: none;
             position: relative;
-            margin: 0 10px; /* Adiciona um pequeno espaço nas extremidades */
+            margin: 0 10px;
         }
 
         input[type="range"]::-webkit-slider-runnable-track {
@@ -141,11 +141,11 @@
             -webkit-appearance: none;
             height: 20px;
             width: 20px;
-            background: #ff4747; /* Cor vermelha */
+            background: #ff4747;
             border-radius: 50%;
-            position: relative; /* Não deve ser absolute */
+            position: relative;
             transition: background 0.3s ease-in-out;
-            margin-top: -6px; /* Ajuste para centralizar mais para cima a bolinha */
+            margin-top: -6px;
         }
 
         input[type="range"]:active::-webkit-slider-thumb {
@@ -211,20 +211,20 @@
             musicPlayer.load();
             musicPlayer.play();
 
+            // Atualiza o perfil de acordo com a música selecionada
             if (selectedMusic === "musica1.mp3") {
-                profileImg.outerHTML = `<img src="kakazitu.png" alt="Foto de Perfil" class="profile-img" id="profileImg">`;
+                profileImg.src = "kakazitu.png";
+                profileImg.alt = "Foto de Perfil";
             } else if (selectedMusic === "musica2.mp3") {
-                profileImg.outerHTML = `
-                    <video class="profile-img" autoplay loop muted id="profileImg">
-                        <source src="lost2.mp4" type="video/mp4">
-                        Seu navegador não suporta o vídeo.
-                    </video>`;
+                profileImg.outerHTML = `<video class="profile-img" autoplay loop muted id="profileImg">
+                                            <source src="lost2.mp4" type="video/mp4">
+                                            Seu navegador não suporta o vídeo.
+                                          </video>`;
             } else if (selectedMusic === "musica3.mp3") {
-                profileImg.outerHTML = `
-                    <video class="profile-img" autoplay loop muted id="profileImg">
-                        <source src="lost3.mp4" type="video/mp4">
-                        Seu navegador não suporta o vídeo.
-                    </video>`;
+                profileImg.outerHTML = `<video class="profile-img" autoplay loop muted id="profileImg">
+                                            <source src="lost3.mp4" type="video/mp4">
+                                            Seu navegador não suporta o vídeo.
+                                          </video>`;
             }
 
             lastPlayed = randomIndex;
