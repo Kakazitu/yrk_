@@ -59,7 +59,7 @@
             }
         }
 
-        // Vídeo que continua rodando sem parar (como no YouTube)
+        // Trocar imagem para vídeo e garantir que ele não pause
         function trocarParaVideoSemParar(videoSrc) {
             if (!videoElement || videoElement.tagName !== 'VIDEO') {
                 videoElement = document.createElement('video');
@@ -70,14 +70,12 @@
                 videoElement.loop = true;
                 profileImg.replaceWith(videoElement);
 
-                // Garante que o vídeo continue rodando ao alternar abas
-                document.addEventListener("visibilitychange", () => {
-                    if (document.visibilityState === "hidden") {
+                // Loop contínuo para garantir que o vídeo não pause
+                setInterval(() => {
+                    if (videoElement.paused) {
                         videoElement.play(); // Força o vídeo a continuar tocando
-                    } else if (document.visibilityState === "visible") {
-                        videoElement.play(); // Certifica que ele não foi pausado
                     }
-                });
+                }, 500); // Verifica a cada 500ms
             }
         }
 
