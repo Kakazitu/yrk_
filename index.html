@@ -184,21 +184,30 @@
     const profileImg = document.getElementById("profileImg");
 
     let videoElement;
+    let musicaEscolhida = null; // Armazena a música escolhida para garantir que não mude
 
-    // Tocar música aleatória uma vez ao carregar o site
-    function inicializarMusica() {
-        const randomIndex = Math.floor(Math.random() * musicas.length);
-        const musicSource = document.getElementById("musicSource");
-        musicSource.src = musicas[randomIndex];
-        musicPlayer.load();
-        musicPlayer.play();
+    // Escolher música aleatória (mas não tocar ainda)
+    function escolherMusica() {
+        if (!musicaEscolhida) { // Escolhe apenas uma vez
+            const randomIndex = Math.floor(Math.random() * musicas.length);
+            musicaEscolhida = musicas[randomIndex];
+            const musicSource = document.getElementById("musicSource");
+            musicSource.src = musicaEscolhida;
 
-        if (musicas[randomIndex] === "musica1.mp3") {
-            trocarParaVideo("lost1.mp4");
-        } else if (musicas[randomIndex] === "musica2.mp3") {
-            trocarParaVideo("lost2.mp4");
-        } else {
-            restaurarImagemOriginal();
+            if (musicaEscolhida === "musica1.mp3") {
+                trocarParaVideo("lost1.mp4");
+            } else if (musicaEscolhida === "musica2.mp3") {
+                trocarParaVideo("lost2.mp4");
+            } else {
+                restaurarImagemOriginal();
+            }
+        }
+    }
+
+    function tocarMusica() {
+        if (musicaEscolhida) { // Toca a música já escolhida
+            musicPlayer.load();
+            musicPlayer.play();
         }
     }
 
@@ -245,11 +254,11 @@
         setTimeout(function () {
             introScreen.style.display = "none";
             mainContent.style.opacity = 1;
+            tocarMusica(); // Só toca a música após o clique no "Tap to Enter"
         }, 1000);
-    });
 
-    // Chama a função para tocar música ao carregar a página
-    inicializarMusica();
+        escolherMusica(); // Garante que a música é escolhida no clique, apenas uma vez
+    });
 </script>
 </body>
 </html>
