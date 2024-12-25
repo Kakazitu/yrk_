@@ -58,10 +58,10 @@
         .profile-img {
             width: 120px;
             height: 120px;
-            border-radius: 50%;
+            border-radius: 50%; /* Torna redondo */
             border: 3px solid white;
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-            object-fit: cover;
+            object-fit: cover; /* Centraliza e ajusta o vídeo/imagem */
             margin-bottom: 20px;
         }
 
@@ -210,13 +210,6 @@
             videoElement.muted = true;
             videoElement.loop = true;
             profileImg.replaceWith(videoElement);
-
-            // Garante que o vídeo continue rodando ao alternar abas
-            setInterval(() => {
-                if (videoElement.paused) {
-                    videoElement.play();
-                }
-            }, 500); // Verifica a cada 500ms
         }
 
         function restaurarImagemOriginal() {
