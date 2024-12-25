@@ -176,64 +176,71 @@
     </audio>
 
     <script>
-        const musicas = ["musica1.mp3", "musica2.mp3", "musica3.mp3"];
-        const musicPlayer = document.getElementById("musicPlayer");
-        const introScreen = document.getElementById("introScreen");
-        const mainContent = document.getElementById("mainContent");
-        const volumeSlider = document.getElementById("volumeSlider");
-        const profileImg = document.getElementById("profileImg");
+    const musicas = ["musica1.mp3", "musica2.mp3", "musica3.mp3"];
+    const musicPlayer = document.getElementById("musicPlayer");
+    const introScreen = document.getElementById("introScreen");
+    const mainContent = document.getElementById("mainContent");
+    const volumeSlider = document.getElementById("volumeSlider");
+    const profileImg = document.getElementById("profileImg");
 
-        let videoElement;
+    let videoElement;
 
-        // Tocar música aleatória
-        function tocarMusicaAleatoria() {
-            const randomIndex = Math.floor(Math.random() * musicas.length);
-            const musicSource = document.getElementById("musicSource");
-            musicSource.src = musicas[randomIndex];
-            musicPlayer.load();
-            musicPlayer.play();
+    // Tocar música aleatória
+    function tocarMusicaAleatoria() {
+        const randomIndex = Math.floor(Math.random() * musicas.length);
+        const musicSource = document.getElementById("musicSource");
+        musicSource.src = musicas[randomIndex];
+        musicPlayer.load();
+        musicPlayer.play();
 
-            if (musicas[randomIndex] === "musica1.mp3") {
-                trocarParaVideo("lost1.mp4");
-            } else if (musicas[randomIndex] === "musica2.mp3") {
-                trocarParaVideo("lost2.mp4");
-            } else {
-                restaurarImagemOriginal();
+        if (musicas[randomIndex] === "musica1.mp3") {
+            trocarParaVideo("lost1.mp4");
+        } else if (musicas[randomIndex] === "musica2.mp3") {
+            trocarParaVideo("lost2.mp4");
+        } else {
+            restaurarImagemOriginal();
+        }
+    }
+
+    function trocarParaVideo(videoSrc) {
+        videoElement = document.createElement('video');
+        videoElement.src = videoSrc;
+        videoElement.classList.add('profile-img');
+        videoElement.autoplay = true;
+        videoElement.muted = true;
+        videoElement.loop = true;
+        profileImg.replaceWith(videoElement);
+
+        // Garante que o vídeo continue rodando mesmo se pausado ou se trocar de aba
+        setInterval(() => {
+            if (videoElement.paused) {
+                videoElement.play();
             }
+        }, 500); // Verifica a cada 500ms
+    }
+
+    function restaurarImagemOriginal() {
+        if (profileImg.tagName === 'VIDEO') {
+            const newImage = document.createElement('img');
+            newImage.src = "kakazitu.png";
+            newImage.classList.add('profile-img');
+            videoElement.replaceWith(newImage);
         }
+    }
 
-        function trocarParaVideo(videoSrc) {
-            videoElement = document.createElement('video');
-            videoElement.src = videoSrc;
-            videoElement.classList.add('profile-img');
-            videoElement.autoplay = true;
-            videoElement.muted = true;
-            videoElement.loop = true;
-            profileImg.replaceWith(videoElement);
-        }
+    volumeSlider.addEventListener("input", function () {
+        musicPlayer.volume = volumeSlider.value;
+    });
 
-        function restaurarImagemOriginal() {
-            if (profileImg.tagName === 'VIDEO') {
-                const newImage = document.createElement('img');
-                newImage.src = "kakazitu.png";
-                newImage.classList.add('profile-img');
-                videoElement.replaceWith(newImage);
-            }
-        }
+    introScreen.addEventListener("click", function () {
+        introScreen.style.opacity = 0;
 
-        volumeSlider.addEventListener("input", function () {
-            musicPlayer.volume = volumeSlider.value;
-        });
-
-        introScreen.addEventListener("click", function () {
-            introScreen.style.opacity = 0;
-
-            setTimeout(function () {
-                introScreen.style.display = "none";
-                mainContent.style.opacity = 1;
-                tocarMusicaAleatoria();
-            }, 1000);
-        });
-    </script>
+        setTimeout(function () {
+            introScreen.style.display = "none";
+            mainContent.style.opacity = 1;
+            tocarMusicaAleatoria();
+        }, 1000);
+    });
+</script>
 </body>
 </html>
