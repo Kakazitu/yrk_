@@ -175,7 +175,7 @@
         Seu navegador não suporta o elemento de áudio.
     </audio>
 
-    <script>
+<script>
     const musicas = ["musica1.mp3", "musica2.mp3", "musica3.mp3"];
     const musicPlayer = document.getElementById("musicPlayer");
     const introScreen = document.getElementById("introScreen");
@@ -211,12 +211,19 @@
         videoElement.loop = true;
         profileImg.replaceWith(videoElement);
 
-        // Garante que o vídeo continue rodando mesmo se pausado ou se trocar de aba
+        // Forçar o vídeo a continuar tocando mesmo que a aba seja trocada
         setInterval(() => {
-            if (videoElement.paused) {
+            if (document.hidden) {
                 videoElement.play();
             }
         }, 500); // Verifica a cada 500ms
+
+        // Ao retornar para a aba, verifica se o vídeo deve ser tocado
+        document.addEventListener("visibilitychange", function () {
+            if (!document.hidden) {
+                videoElement.play();
+            }
+        });
     }
 
     function restaurarImagemOriginal() {
