@@ -7,7 +7,54 @@
     <link rel="icon" href="kakazitu.png" type="image/png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap">
     <style>
-        /* Estilos */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: 'Fira Code', monospace;
+            background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            overflow: hidden;
+            transition: background-color 1s ease-in-out;
+        }
+
+        .intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 9999;
+            transition: opacity 1s ease-in-out;
+            cursor: pointer;
+        }
+
+        .intro-screen h1 {
+            font-size: 2.5em;
+            color: white;
+            text-align: center;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 600px;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
         .profile-img {
             width: 120px;
             height: 120px;
@@ -16,6 +63,83 @@
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
             object-fit: cover;
             margin-bottom: 20px;
+        }
+
+        .name {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #ff4747;
+        }
+
+        .description {
+            font-size: 1.2em;
+            color: #ccc;
+            margin-bottom: 30px;
+        }
+
+        .links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .links a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 60px;
+            height: 60px;
+            background: #292929;
+            border-radius: 50%;
+            transition: transform 0.3s, background 0.3s;
+        }
+
+        .links a img {
+            width: 30px;
+            height: 30px;
+        }
+
+        .links a:hover {
+            transform: scale(1.2);
+            background: #ff4747;
+        }
+
+        footer {
+            margin-top: 30px;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .volume-control {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #ccc;
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 150px;
+            height: 10px;
+            background: #555;
+            border-radius: 5px;
+            outline: none;
+            margin: 0 10px;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 20px;
+            width: 20px;
+            background: #ff4747;
+            border-radius: 50%;
+            margin-top: -6px;
+        }
+
+        audio {
+            display: none;
         }
     </style>
 </head>
@@ -28,6 +152,22 @@
         <img src="kakazitu.png" alt="Foto de Perfil" class="profile-img" id="profileImg">
         <div class="name">Kakazitu</div>
         <div class="description">Desenvolvedor | Criador de Conteúdo</div>
+
+        <div class="links">
+            <a href="http://discordapp.com/users/1136065248420438047" target="_blank">
+                <img src="discord-logo1.png" alt="Discord Logo">
+            </a>
+            <a href="https://www.roblox.com/pt/users/2798972541/profile" target="_blank">
+                <img src="roblox-logo1.png" alt="Roblox Logo">
+            </a>
+        </div>
+
+        <footer>&copy; 2024 Kakazitu | Todos os direitos reservados</footer>
+
+        <div class="volume-control">
+            <label for="volumeSlider">Volume:</label>
+            <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="1">
+        </div>
     </div>
 
     <audio id="musicPlayer" loop>
@@ -40,6 +180,7 @@
         const musicPlayer = document.getElementById("musicPlayer");
         const introScreen = document.getElementById("introScreen");
         const mainContent = document.getElementById("mainContent");
+        const volumeSlider = document.getElementById("volumeSlider");
         const profileImg = document.getElementById("profileImg");
 
         let videoElement;
@@ -52,34 +193,32 @@
             musicPlayer.load();
             musicPlayer.play();
 
-            if (musicas[randomIndex] === "musica2.mp3") {
-                trocarParaVideoSemParar("lost2.mp4");
+            if (musicas[randomIndex] === "musica1.mp3") {
+                trocarParaVideo("lost1.mp4");
+            } else if (musicas[randomIndex] === "musica2.mp3") {
+                trocarParaVideo("lost2.mp4");
             } else {
                 restaurarImagemOriginal();
             }
         }
 
-        // Trocar imagem para vídeo e garantir que ele não pause
-        function trocarParaVideoSemParar(videoSrc) {
-            if (!videoElement || videoElement.tagName !== 'VIDEO') {
-                videoElement = document.createElement('video');
-                videoElement.src = videoSrc;
-                videoElement.classList.add('profile-img');
-                videoElement.autoplay = true;
-                videoElement.muted = true;
-                videoElement.loop = true;
-                profileImg.replaceWith(videoElement);
+        function trocarParaVideo(videoSrc) {
+            videoElement = document.createElement('video');
+            videoElement.src = videoSrc;
+            videoElement.classList.add('profile-img');
+            videoElement.autoplay = true;
+            videoElement.muted = true;
+            videoElement.loop = true;
+            profileImg.replaceWith(videoElement);
 
-                // Loop contínuo para garantir que o vídeo não pause
-                setInterval(() => {
-                    if (videoElement.paused) {
-                        videoElement.play(); // Força o vídeo a continuar tocando
-                    }
-                }, 500); // Verifica a cada 500ms
-            }
+            // Garante que o vídeo continue rodando ao alternar abas
+            setInterval(() => {
+                if (videoElement.paused) {
+                    videoElement.play();
+                }
+            }, 500); // Verifica a cada 500ms
         }
 
-        // Restaurar a imagem original
         function restaurarImagemOriginal() {
             if (profileImg.tagName === 'VIDEO') {
                 const newImage = document.createElement('img');
@@ -88,6 +227,10 @@
                 videoElement.replaceWith(newImage);
             }
         }
+
+        volumeSlider.addEventListener("input", function () {
+            musicPlayer.volume = volumeSlider.value;
+        });
 
         introScreen.addEventListener("click", function () {
             introScreen.style.opacity = 0;
