@@ -185,8 +185,8 @@
 
     let videoElement;
 
-    // Tocar música aleatória
-    function tocarMusicaAleatoria() {
+    // Tocar música aleatória uma vez ao carregar o site
+    function inicializarMusica() {
         const randomIndex = Math.floor(Math.random() * musicas.length);
         const musicSource = document.getElementById("musicSource");
         musicSource.src = musicas[randomIndex];
@@ -245,9 +245,11 @@
         setTimeout(function () {
             introScreen.style.display = "none";
             mainContent.style.opacity = 1;
-            tocarMusicaAleatoria();
         }, 1000);
     });
+
+    // Chama a função para tocar música ao carregar a página
+    inicializarMusica();
 </script>
 </body>
 </html>
