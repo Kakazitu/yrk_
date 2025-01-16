@@ -58,10 +58,10 @@
         .profile-img {
             width: 120px;
             height: 120px;
-            border-radius: 50%; /* Torna redondo */
+            border-radius: 50%; 
             border: 3px solid white;
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-            object-fit: cover; /* Centraliza e ajusta o vídeo/imagem */
+            object-fit: cover; 
             margin-bottom: 20px;
         }
 
@@ -162,7 +162,7 @@
             </a>
         </div>
 
-        <footer>&copy; 2024 Kakazitu | Todos os direitos reservados</footer>
+        <footer>&copy; 2025 Kakazitu | Todos os direitos reservados</footer>
 
         <div class="volume-control">
             <label for="volumeSlider">Volume:</label>
@@ -184,11 +184,11 @@
     const profileImg = document.getElementById("profileImg");
 
     let videoElement;
-    let musicaEscolhida = null; // Armazena a música escolhida para garantir que não mude
+    let musicaEscolhida = null; 
 
-    // Escolher música aleatória (mas não tocar ainda)
+    
     function escolherMusica() {
-        if (!musicaEscolhida) { // Escolhe apenas uma vez
+        if (!musicaEscolhida) { 
             const randomIndex = Math.floor(Math.random() * musicas.length);
             musicaEscolhida = musicas[randomIndex];
             const musicSource = document.getElementById("musicSource");
@@ -205,7 +205,7 @@
     }
 
     function tocarMusica() {
-        if (musicaEscolhida) { // Toca a música já escolhida
+        if (musicaEscolhida) { 
             musicPlayer.load();
             musicPlayer.play();
         }
@@ -220,14 +220,14 @@
         videoElement.loop = true;
         profileImg.replaceWith(videoElement);
 
-        // Forçar o vídeo a continuar tocando mesmo que a aba seja trocada
+        
         setInterval(() => {
             if (document.hidden) {
                 videoElement.play();
             }
-        }, 500); // Verifica a cada 500ms
+        }, 500); 
 
-        // Ao retornar para a aba, verifica se o vídeo deve ser tocado
+    
         document.addEventListener("visibilitychange", function () {
             if (!document.hidden) {
                 videoElement.play();
@@ -254,10 +254,10 @@
         setTimeout(function () {
             introScreen.style.display = "none";
             mainContent.style.opacity = 1;
-            tocarMusica(); // Só toca a música após o clique no "Tap to Enter"
+            tocarMusica(); 
         }, 1000);
 
-        escolherMusica(); // Garante que a música é escolhida no clique, apenas uma vez
+        escolherMusica(); 
     });
 </script>
 </body>
